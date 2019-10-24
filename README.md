@@ -3,7 +3,7 @@
 #### 1. Requirements
 
 To develop these docs, you should be familiar with Markdown formatting language. You can read the documentation written by its creator John Gruber [here][markdown-documentation], and if you need a refresher, [this tutorial][markdown-tutorial] should suffice.
-To write these docs, I recommend [typora][typora-website]  (`brew cask install typora`), mostly for its text navigation features - it has a sidebar where the headers are listed, so we can jump to wherever we want in the text -, but feel free to use any software of your choice.
+To write these docs, I recommend [typora][typora-website] (`brew cask install typora`), mostly for its text navigation features - it has a sidebar where the headers are listed, so we can jump to wherever we want in the text -, but feel free to use any software of your choice.
 
 
 
@@ -11,7 +11,7 @@ To write these docs, I recommend [typora][typora-website]  (`brew cask install t
 
 ##### 2.1. Project structure
 
-This project structure is just a bunch of directories mimicking the structure we have on our slides. Each **module** has an _index.md_ linking to all the docs for that particular module. Each **directory for a specific subject** has the same structure: 
+This project structure is just a bunch of directories mimicking the structure we have on our slides. Each **module** has an _index.md_ linking to all the docs for that particular module. Each **dxxirectory for a specific subject** has the same structure: 
 
 * an md file, which is basically the doc file
 * a directory resources with two sub-directories (images and videos), where all the resources needed for the doc file should be
@@ -24,7 +24,7 @@ This project structure is just a bunch of directories mimicking the structure we
 
 ##### 2.2. Trello
 
-There is a dedicated [Trello board][trello-link] where all classes are listed, whoever wants it, should add themselves as a member of that card. If you are interested in developing docs already assigned to someone, coordinate with them or pick another one. 
+There is a dedicated [Trello board][trello-board] where all classes are listed, whoever wants it, should add themselves as a member of that card. If you are interested in developing docs already assigned to someone, coordinate with them or pick another one. 
 
 
 
@@ -71,11 +71,8 @@ As follows:
 
 [markdown-documentation]:https://daringfireball.net/projects/markdown/
 [markdown-tutorial]: https://www.markdowntutorial.com/
-[trello-board]: <trello-board>
-[typora]:https://www.typora.io/
+[trello-board]: <https://trello.com/b/jbOEmzmj>
+[typora-website]:https://www.typora.io/
 [directory-structure]: <resources/images/directory-structure.png>
 
 [docs-repo]: https://github.com/talefe/notes
-
-
-
