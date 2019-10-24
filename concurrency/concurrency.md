@@ -13,15 +13,21 @@ A _program_ is just a set of instructions (think about Von Neumann machine we di
 
 ![Single Core CPU][single-core-cpu]
 
-We can think of this program as a _Thread_, a unit of execution - a set of instructions that together perform some specific task. On the days of MS-DOS and Command Line based OSes, applications were single threaded, so the set of instructions would just be read into the **CPU**.
+
+
+We can think of a program as a _Thread_, a unit of execution - a set of instructions that together perform some specific task. On the days of MS-DOS and Command Line based OSes, applications were single threaded, so the set of instructions would just be read into the **CPU**.
 We quickly moved to _Multi-Tasking Operating Systems_, where we wanted multiple applications open at once. 
 In this example, **Word** and **Excel** are two different programs in execution in memory.
 
-TODO: summarize this image 
+#TODO: summarize this image 
 
-![Multi-Tasking Operating Systems][multi-tasking-os]
+![Pre-emptive Multi-Tasking][pre-emptive-multitasking]
 
-![Screenshot 2019-10-23 at 23.11.07](/Users/saratalefe/Desktop/Screenshot 2019-10-23 at 23.11.07.png)
+There are various approaches to implementing multi-tasking
+
+![Multi-Tasking Operating Systems Implementations][multi-tasking-os]
+
+
 
 
 
@@ -42,8 +48,6 @@ Threads are a great and inescapable feature of the Java language. The can _simpl
 
 ![multithreading visual representation][multithreading]
 
-[![Multithreading video][multithreading-video-frame]][multithreading-video]
-
 
 
 #### 1.1. A Brief History of Concurrency
@@ -53,17 +57,13 @@ Operating systems evolved to allow more than one program to run at once, running
 
 
 
-
-
-[multi-tasking-os]: file:///Users/saratalefe/Library/Application Support/typora-user-images/image-20191023231308590.png
-[ single-core-cpu ]: resources/images/single-core-cpu.png
-
-
-
+[single-core-cpu]: resources/images/single-core-cpu.png
+[pre-emptive-multitasking]: resources/images/pre-emptive-multitasking.png
+[multi-tasking-os]: resources/images/multi-tasking-os.png
 [processor]:http://www.google.com
 [multithreading]: https://www.tutorialspoint.com/operating_system/images/thread_processes.jpg
 [multithreading-video]: https://www.youtube.com/watch?v=t-zgY7zV9tk
-[multithreading-video-frame]: https://i.ibb.co/GR0q6gN/https-i-ytimg-com-vi-t-zg-Y7z-V9tk-hqdefault.jpg 
+[multithreading-video-frame]: https://i.ibb.co/GR0q6gN/https-i-ytimg-com-vi-t-zg-Y7z-V9tk-hqdefault.jpg
 [process-vs-threads-video]: https://www.youtube.com/watch?v=exbKr6fnoUw
 [process-vs-threads-video-frame]: https://i.ibb.co/MMVd0mm/https-i-ytimg-com-vi-exb-Kr6fno-Uw-maxresdefault.jpg
 
