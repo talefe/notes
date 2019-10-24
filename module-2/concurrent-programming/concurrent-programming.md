@@ -2,16 +2,23 @@
 
 A _program_ is just a set of instructions (think about Von Neumann machine we did in class).
 
-**In order for a program to be executed:**
+#### **In order for a program to be executed:**
 
 1. The instructions need to be stored in the system **RAM**.
+
 2. Then sent to the **CPU** through the **Data, Address and Control BUSes**.
+
 3. Once they enter the **CPU**, they go down a queue usually called **Pipeline**.
+
 4. The **CPU** executes these instructions using various components (p.e. Math Processor) (Execution Engine is just a fancy name for many components).
+
 5. For every **CPU** there is a **Clock** that runs at a certain frequency (p.e. 2GHz)
+
 6. Eventually, each instruction will be executed.
 
-![Single Core CPU][single-core-cpu]
+   
+  
+   ![Single Core CPU][single-core-cpu]
 
 
 
