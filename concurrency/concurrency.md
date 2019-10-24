@@ -2,7 +2,7 @@
 
 A _program_ is just a set of instructions (think about Von Neumann machine we did in class).
 
-**In order for a program to be executed: **
+**In order for a program to be executed:**
 
 1. The instructions need to be stored in the system **RAM**.
 2. Then sent to the **CPU** through the **Data, Address and Control BUSes**.
