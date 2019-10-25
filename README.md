@@ -1,32 +1,51 @@
-## Class docs, finally!
+# Class docs, finally!
 
-### 1. Requirements
+
+
+## 1. Requirements
 
 To develop these docs, you should be familiar with Markdown formatting language. You can read the documentation written by its creator John Gruber [here][markdown-documentation], and if you need a refresher, [this tutorial][markdown-tutorial] should suffice.
+
 To write these docs, I recommend [typora][typora-website] (`brew cask install typora`), mostly for its text navigation features - it has a sidebar where the headers are listed, so we can jump to wherever we want in the text -, but feel free to use any software of your choice.
 
-### 2. Development
 
-#### 2.1. Project structure
 
-This project structure is just a bunch of directories mimicking the structure we have on our slides. Each **module** has an _index.md_ linking to all the docs for that particular module. Each **directory for a specific subject** has the same structure: 
+## 2. Development
+
+
+
+### 2.1. Project structure
+
+This project structure is just a bunch of directories mimicking the structure we have on our slides. Each **module** has an _index.md_ linking to all the docs for that particular module. 
+
+* [Module 0 - Introduction to Computing Systems and Programming][module-0]
+
+* [Module 1 - Programming in Java][module-1]
+
+* [Module 2 - Advanced Concepts & Tools][module-2]
+
+* [Module 3 - Databases, Frameworks & Web Development][module-3]
+
+* [Module 4 - JavaScript][module-4]
+
+  
+
+Each **directory for a specific subject** has the same structure: 
 
 * an md file, which is basically the doc file
 * a directory resources with two sub-directories (images and videos), where all the resources needed for the doc file should be
-
-
 
 ![Directory structure][directory-structure]
 
 
 
-#### 2.2. Trello
+### 2.2. Trello
 
 There is a dedicated [Trello board][trello-board] where all classes are listed, whoever wants it, should add themselves as a member of that card. If you are interested in developing docs already assigned to someone, coordinate with them or pick another one. 
 
 
 
-#### 2.3. Git flow
+### 2.3. Git flow
 
 As follows:
 
@@ -39,9 +58,9 @@ As follows:
 
 
 
-### 3. Docs standards
+## 3. Docs standards
 
-#### 3.1. Formatting rules
+### 3.1. Formatting rules
 
 * All the visual resources you need should be in the resources directory for that particular class. (this ensures we never have broken links, if a picture is removed from a certain server)
 
@@ -55,7 +74,7 @@ As follows:
 
 
 
-#### 3.2. md files organization
+### 3.2. md files organization
 
 * All files should start with a **_context_** section, to help contextualize the subject that we'll be talking about next
 * It should have images and schemes where appropriate. If you did a really cool drawing in class, make sure to take a picture and upload it to the resources for that class, so that later people can reference it.
@@ -74,3 +93,10 @@ As follows:
 [directory-structure]: <resources/images/directory-structure.png>
 
 [docs-repo]: https://github.com/talefe/notes
+
+[module-0]: <module-0/index.md>
+[module-1]: <module-1/index.md>
+[module-2]: <module-2/index.md>
+[module-3]: <module-3/index.md>
+[module-4]: <module-4/index.md>
+
