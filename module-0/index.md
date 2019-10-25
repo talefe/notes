@@ -1,17 +1,11 @@
 **Module 0**
 
 * [Fundamentals of Electricity][electricity-fundamentals]
-
 * [Numeral Systems][numeral-systems]
-
 * [Digital Electronics][digital-electronics]
-
 * [Computer Architecture][computer-architecture]
-
 * [Operating System Fundamentals][operating-systems]
-
 * [Introduction to Computer Programming][intro-computer-programming]
-
 * [Version Control Systems][version-control-systems]
 
 
