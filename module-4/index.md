@@ -10,11 +10,15 @@
 
 
 
-[js-fundamentals]: <js-fundamentals/js-fundamentals.md
-[web-development]: <web-development/web-development.md
-[jquery]: <jquery/jquery.md
-[js-deep-dive]: <js-deep-dive/js-deep-dive.md
-[async-programming]: <async-programming/async-programming.md
-[es6]: <es6/es6.md
-[react]: <react/react.md
+[js-fundamentals]: <js-fundamentals/js-fundamentals.md>
+[web-development]: <web-development/web-development.md>
+[jquery]: <jquery/jquery.md>
+[js-deep-dive]: <js-deep-dive/js-deep-dive.md>
+[async-programming]: <async-programming/async-programming.md>
+[es6]: <es6/es6.md>
+[react]: <react/react.md>
+
+
+
+
 
