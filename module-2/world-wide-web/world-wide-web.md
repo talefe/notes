@@ -36,6 +36,9 @@ Since some sites don't allow you to download recursively and will check what bro
 
 `wget -r -H --convert-links --level=NUMBER --user-agent=AGENT URL`
 
+**You can then use npm's http-server to locally host the site you've downloaded properly**  
+(in case you don't have it, you can run `npm install http-server -g` and run it using `http-server`or `hs`)
+
 #### **java.net.URL** examples
 (the exercise "source-viewer" proposed in the slides is just the same as we see here when opening a stream and reading from it)
 
@@ -119,8 +122,46 @@ Maybe preferably choose a simple page in order to just not have too much going o
 Checking the network traffic for [java.net.URL](https://docs.oracle.com/javase/7/docs/api/java/net/URL.html) for example should get you something relatively simple for instance.
 
 ##### Extra example
-An extra example you can do is simply to start your netcat listening on port 8080 `nc -l 8080` and performing a request with your browser to your localhost in order to should your cadets a clear request as it arrives to a webserver.
+An extra example you can do is simply to start your netcat listening on port 8080 `nc -lp 8080`(the -p flag is for port, some versions of netcat require it to be declared explicitly) and performing a request with your browser to your localhost in order to should your cadets a clear request as it arrives to a webserver.
 
+### Web-server exercise
+The objective is to have the cadets implement their very first web-server.  
+They will have to deal with receiving HTTP requests and answering them by using Java's TCP sockets, and they will need to grasp the understanding of how the communication with a browser occurrs (request->response).
+
+What's intended from the cadets:
+
+* build a server that is able to handle one request at a time
+* it's a server so it shouldn't close after handling the first request
+* should send a 404 response in case an unexisting resource was asked for with possibly a default html
+* remember them that we will be using Java's ServerSocket and Socket classes
+
+We can then show our web-server running and the following examples:  
+(remember to open the browser's dev tools)
+
+* access the root
+* access a resource like `localhost:8080/logo.png`
+* show what happens when you attemp a erquest to a ersource that does not exist `localhost:8080/verysillyresource.html`
+* remember the cadets that their respoonses need to start with the appropriate header and provide them with the necessary headers:
+
+```
+HTTP/1.0 200 Document Follows\r\n
+Content-Type: text/html; charset=UTF-8\r\n
+Content-Length: <file_byte_size> \r\n
+\r\n
+
+HTTP/1.0 200 Document Follows\r\n
+Content-Type: image/<image_file_extension> \r\n"
+Content-Length: <file_byte_size> \r\n
+\r\n
+
+HTTP/1.0 404 Not Found
+Content-Type: text/html; charset=UTF-8\r\n
+Content-Length: <file_byte_size> \r\n
+\r\n
+```
+The new lines at the end are needed for the browser to correctly understand the response.
+
+* If the cadets want to attempt to send more advanced files than html, like images and the such, advise them to use the DataOutputStream class as it has several handy methods such as `writeBytes(String)` and `write(File, beginning, size)`
 
 
 [http-status]:resources/images/http-status.jpg
