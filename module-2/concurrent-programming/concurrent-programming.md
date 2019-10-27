@@ -1,7 +1,7 @@
 Authors:
 
-[Christina Hinchin][mailto:christina.hinchin@academiadecodigo.org]
-[Sara Talefe][mailto:sara.talefe@academiadecodigo.org]
+[Christina Hinchin](mailto:christina.hinchin@academiadecodigo.org)
+[Sara Talefe](mailto:sara.talefe@academiadecodigo.org)
 
 
 
@@ -750,12 +750,4 @@ We will build a producer/consumer app using a blocking queue. I have a pizzeria 
 [process-context-switch-video]: <https://www.youtube.com/watch?v=lS1GOdXFLJo>
 [basic-thread-management-interactions-video]: <https://www.youtube.com/watch?v=oKJqqvnjl_s>
 [asynchronous-programming-with-async-await-article]: <https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/>
-[semaphore-and-mutex-article]: <https://crunchify.com/what-is-java-semaphore-and-mutex-java-concurrency-multithread-explained-with-example/>
-
-
-
-
-
-[christina.hinchin@academiadecodigo.org]: 
-[mailto://christina.hinchin@academiadecodigo.org]: 
-[mailto:christina.hinchin@academiadecodigo.org]: 
+[semaphore-and-mutex-article]: <https://crunchify.com/what-is-java-semaphore-and-mutex-java-concurrency-multithread-explained-with-example/ >
