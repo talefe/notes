@@ -4,7 +4,7 @@
 
 ## 1. Requirements
 
-To develop these docs, you should be familiar with Markdown formatting language. You can read the documentation written by its creator John Gruber [here][markdown-documentation], and if you need a refresher, [this tutorial][markdown-tutorial] should suffice.
+To develop these docs, you should be familiar with Markdown formatting language. You can read the documentation written by its creator John Gruber [here][markdown-documentation], and if you need a refresher, [this tutorial][markdown-tutorial] should suffice.\
 
 To write these docs, I recommend [typora][typora-website] (`brew cask install typora`), mostly for its text navigation features - it has a sidebar where the headers are listed, so we can jump to wherever we want in the text -, but feel free to use any software of your choice.
 
