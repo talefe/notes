@@ -9,7 +9,7 @@ Authors:
 
 Back in the dark ages, when programs were fed to a computer on a punched paper card, or on magnetic tape, these computers could only execute one program at a time. The program would be run sequentially and would access any resources it might need directly from the machine.
 
-
+&nbsp;
 
 ![Single Core CPU][single-core-cpu]*Program In Execution In Memory in a Single-Core CPU*
 
@@ -24,7 +24,7 @@ Back in the dark ages, when programs were fed to a computer on a punched paper c
 6. Eventually, each instruction will be executed.
 
 
-
+&nbsp;
 
 **Operating systems** evolved to allow more than one program to run at once, running individual programs in processes. This is analogous to the real life. When you're at home making dinner and finishing the summarizer for the next day *at the same time*, what you are really doing is cutting up some onions and adding them to the pan, then finding that funny meme for the presentation, then quickly stirring the onions so they don’t burn, then switching back to your laptop - otherwise known as *multi-tasking*.
 
@@ -35,13 +35,13 @@ Well, in truth, they don’t execute at the same exact time.
 
 When we say “multiple tasks are executing at the same time”, what we *actually* mean is that “multiple tasks are making progress during the same period of time.” The tasks are executed in an interleaved manner. And the way this happens is through the Operating System. It switches between the tasks so frequently that it appears like they are being executed at the same instant when in fact, they aren’t.
 
-
+&nbsp;
 
 **Example of how an operating system achieves _multi-tasking_**
 
 ![Pre-emptive Multi-Tasking][pre-emptive-multitasking]*Pre-emptive Multitasking - In this example, **Word** and **Excel** are two different programs in execution in memory, two different processes running. The Scheduler is responsible for allocating CPU time to each process using criteria like priority (circled numbers) to decide.*
 
-
+&nbsp;
 
 If they needed to, processes could communicate with one another through a variety of Inter-Process Communication (IPC) mechanisms: sockets, signal handlers, shared memory, semaphores, and files.
 
@@ -55,15 +55,19 @@ It is not actually you shutting down the program - you are just send a signal vi
 
 A semaphore restricts the number of simultaneous users of a shared resource up to a maximum number. Threads can request access to the resource (decrementing the semaphore), and can signal that they have finished using the resource (incrementing the semaphore).
 
+&nbsp;
 
-
-### Threads
+## 2.2. Threads
 
 Concurrency doesn’t necessarily involve multiple applications. Running multiple parts of a single application simultaneously is also termed as concurrency.
 
 A word processor formats the text AND responds to keyboard events *at the same time*. Spotify reads the audio from the network, decompresses it and updates the display *at the same time*. And a web server serves thousands of requests from all over the world *at the same time*.
 
 These smaller parts of a Process that can run concurrently are known as **Threads**. The act of multiple threads running concurrently is known as *Multi-threading*.
+
+A thread is a path of execution within a process. Every process has at least one thread - called the main thread. This main thread can create additional threads within the process. All of the threads share the same address space as the process which is running, and share the same resources such as memory and files.
+
+Every thread does have, however, its own call stack and local variables.
 
 **Our program: How to cook dinner:**
 
@@ -74,23 +78,13 @@ These smaller parts of a Process that can run concurrently are known as **Thread
 
 In real life, you'd execute these instructions **asynchronously**. You'd start by warming the water, then peeling and cutting the veggies, when the water is boiling, adding the spaghetti, .... At each step of the process, you'd start a task, and switch to the tasks that are ready for your attention.
 
-Writing correct programs is hard; writing concurrent programs is harder. More things can go wrong in a concurrent program compared to a sequential one.
+&nbsp;
 
-**Why bother with concurrency?**
+## 2.3. Processes vs Threads
 
-Threads are a great and inescapable feature of the Java language. The can _simplify the development of complex systems_ by turning asyncronous code into simpler straight-line code. Threads are the easiest way to tap the computing power of multiprocessor systems. [(processor counts increase)][processor]
+&nbsp;
 
 ![multithreading visual representation][multithreading]
-
-
-
-
-
-A thread is a path of execution within a process. Every process has at least one thread - called the main thread. This main thread can create additional threads within the process. All of the threads share the same address space as the process which is running, and share the same resources such as memory and files.
-
-Every thread does have, however, its own call stack and local variables.
-
-### Processes vs Threads
 
 Since threads share the same address space of the process, creating new threads and communicating between them is a lot more efficient.
 
@@ -98,11 +92,13 @@ Concurrency overall greatly improves the capacity of a computer - with it we sim
 
 If multiple threads have access to the same data within a process, then they can all modify that data - even if that data is currently being used by another thread in question. This can end up causing some very unpredictable results, which are extremely hard to detect.
 
+Writing correct programs is hard; writing concurrent programs is harder. More things can go wrong in a concurrent program compared to a sequential one.
+
 But the biggest question is:
 
+&nbsp;
 
-
-### Why Should I Care?
+## 2.4. Why Should I Care?
 
 Threads are everywhere. Even if your program never explicitly creates a thread, frameworks you use may create threads on your behalf and we need to be sure the code called from these threads is *safe* and the only way to do that is to be aware of what a safe multi-threaded environment *is*.
 
@@ -112,9 +108,13 @@ Besides, used right, threads can greatly improve the performance of complex appl
 
 Imagine if instead of being able to “multi-task” we could only ever do anything once at a time. We would never get anything worthwhile done!
 
-### { Timer Hands-On }
+&nbsp;
+
+## 2.5. {Hands-On} Timer
 
 Java class from the `utils` package, used to schedule tasks for future execution in a background thread that corresponds to each `Timer` object. The `scheduleAtFixedRate()` recieves a `TimerTask` object and schedules this object for repeated fixed-rate execution, beginning either at a specified time or after a specified delay.
+
+&nbsp;
 
 ### Why not use Thread.sleep() ?
 
@@ -124,11 +124,11 @@ Because Thread.sleep(n) is a big fat lie. You think that it blocks a thread for 
 
 The Timer method we are going to use recieves a TimerTask object, which is an abstract class, so we are going to create a subclass and override the `run` method.
 
-## Thread Creation
+&nbsp;
 
+## 2.6. Thread Creation
 
-
-So there are objects in Java that create threads implicitly, but how do we go about making threads of our own? Well, there are two ways to go about it.
+There are objects in Java that create threads implicitly, but how do we go about making threads of our own? There are two ways we can explicitly create Threads.
 
 - Extending the Thread class.
 - Implementing the Runnable interface.
@@ -137,13 +137,17 @@ We can extend the Thread class, but this is very limited because once you extend
 
 We can implement the Runnable interface, which is the primary template for any object that is intended to be executed by a thread. It defines a single method - run() - which is meant to contain the code that we want to be executed by the thread.
 
-When creating a new Thread, we invoke the method start() which in turn, runs the run() method in whatever way we chose to implement it.
+When creating a new Thread, we invoke the method start() which in turn, calls the run() method in whatever way we chose to implement it.
 
-### Write stuff here about the Explicit Thread Creation Handson
+&nbsp;
 
-## Thread Synchronization
+## 2.7 {Hands-On} Thread Creation 
 
 
+
+&nbsp;
+
+## 2.8. Thread Synchronization
 
 Under normal circumstances where we have more than one thread, there is zero guarantee of the order of execution of threads. We might create three threads in sequential order, but the order in which they start and end is not specified. We could run the same block of code multiple times and obtain different results. This is quite unpredictable.
 
@@ -155,13 +159,19 @@ We could use the sleep() method, which allows us to pause the execution of one t
 
 The **join()** method allows one thread to wait for the completion of the other. It will hold the execution of the currently running thread until the thread upon which the method has been invoked has finished its execution.
 
-### Write stuff here about the Thread-Sync using Join Handson
+&nbsp;
 
-### {Exercise} Concurrent WebServer
+## 2.9. {Hands-On} Thread-Sync using Join 
 
-## Thread Safety
+&nbsp;
 
+## 2.10. {Exercise} Concurrent WebServer
 
+&nbsp;
+
+## 2.11. Thread Safety
+
+&nbsp;
 
 > Concurrent programming isn’t so much about threads or locks, any more than civil engineering is about rivets and I-beams. Of course, building bridges that don’t fall down requires the correct use of these things, just as concurrent programs require the correct use of threads and locks. But these are just mechanisms - means to an end. Writing thread-safe code is, at its core, about managing access to state, and in particular to shared, mutable state.
 > — Java Concurrency in Practice
@@ -174,7 +184,9 @@ Concurrent programming errors fall into one of these three categories:
 2. Atomicity
 3. Ordering
 
-### Visibility
+&nbsp;
+
+## 2.12. Visibility
 
 Firstly, what is visibility? The name says it all. That the actions of one thread may be *visible* to another. The problem is this isn’t always the case.
 
@@ -201,17 +213,19 @@ Okay, so we get why caches help speed up processing, but what does that have to 
 
 Well, rather than read from and writing directly to the main memory, each thread may also copy variables from the main memory into a CPU cache while working on them. The JVM makes no guarantee about when it reads data from main memory into CPU caches or when it takes data from caches and writes to the main memory - which in a multithreaded environment could cause problems.
 
-```javascript
+```java
 public class FieldVisibility {
-    private int x = 0;
+  
+  private int x = 0;
 
-    public void writerThread(){
-        x = 1;
-    }
+  public void writerThread(){
+      x = 1;
+  }
 
-    public void readerThread(){
-        int r1 = x;
-    }
+  public void readerThread(){
+      int r1 = x;
+  }
+
 }
 ```
 
@@ -228,7 +242,9 @@ public class FieldVisibility {
 
 This problem of not seeing the latest value of a variable because it has not yet been written back to main memory by another thread is called a “visibility” problem. The updates of one thread are not *visible* to other threads.
 
-### Volatile
+&nbsp;
+
+## 2.13. Volatile
 
 The `volatile` keyword intends to address visibility problems. By declaring a variable `volatile` all writes will be written back to main memory immediately. Also, all reads will be read directly from main memory.
 
@@ -236,27 +252,29 @@ Volatile also defines a **happens-before** relationship.
 
 Meaning, that whatever happens *before* a volatile write should be visible *after* a volatile read.
 
-```javascript
-int a = 0;
-int b = 0;
-volatile int = x;
+```java
+private int a = 0;
+private int b = 0;
+private volatile int = x;
 
-void writerThread(){
-    a = 1;
-    b = 1;
-    x = 1;   // volatile write
+public void writerThread(){
+  a = 1;
+  b = 1;
+  x = 1;   // volatile write
 }
 
-void readThread(){
-    int r1 = x;  // volatile read
-    int d1 = a;
-    int d2 = b;
+public void readThread(){
+  int r1 = x;  // volatile read
+  int d1 = a;
+  int d2 = b;
 }
 ```
 
 So, the changes that were made to a and b - before the volatile write - will become visible after the volatile read - to d1 and d2.
 
-### Volatile is Not Always Enough
+&nbsp;
+
+## 2.14. Volatile is Not Always Enough
 
 In the previous example where one thread performs a read and write whilst the other simply performs a read, then making sure our variable is volatile ensures that the second thread will always see the changes the first thread is making.
 
@@ -270,23 +288,25 @@ counter++
 
 Is in reality two separate operations - first a read and then a write. In order to make this operation **thread safe**, we need it to act as if it was one operation. We need it to be *atomic.*
 
-## Atomicity
+&nbsp;
 
+## 2.15. Atomicity
 
+&nbsp;
 
 > Atom - derived from the Greek word *atomos* which means “Indivisible”
 
 If an action is (or a set of actions are) atomic, it’s result must be seen to happen “all at once”, or indivisibly.
 
-```javascript
+```java
 private volatile long balance = 10;
 
-void deposit(long x){
+public void deposit(long x){
 	long b = getBalance();
 	setbalance(b + x);
 }
 
-void withdraw(long x){
+public void withdraw(long x){
 	long b = getBalance();
 	setbalance(b - x);
 }
@@ -310,22 +330,27 @@ Long and double require two memory operations because they are stored as two 32-
 
 But still, as we saw before - declaring a variable as being volatile isn’t enough to ensure thread-safety - we need to make sure the operations we are performing on it is also atomic.
 
-### Atomic Variables
+&nbsp;
+
+## 2.17. Atomic Variables
 
 In Java we have classes which work a lot like our wrapper of primitive types, with the added guarantee that they can be used safely in a multi-threaded context.
 
 They provide operations that cannot be interfered by multiple threads, such as increment and decrement. They are guaranteed to execute atomically using machine-level instructions on modern processors.
 
+&nbsp;
+
+## 2.18. Check-Then-Act
+
 Whilst we now guarantee atomicity upon primitive values, we still need to watch out for issues such as the deposit and withdraw problem we discussed earlier.
 
-```javascript
+```java
 public void withdrawMoney(long money){
-
-    //check
-    if(balance >= money){
-        //act
-        balance -= money;
-    }
+  //check
+  if(balance >= money){
+      //act
+      balance -= money;
+  }
 }
 ```
 
@@ -335,9 +360,11 @@ First, we perform a *check* and then we *act* upon this check. As we saw earlier
 
 There is yet another problem working against us when we have multi-threading…
 
-## Ordering
+&nbsp;
 
+## 2.19. Ordering
 
+&nbsp;
 
 > The Java compiler can change the order of execution if it believes the outcome will not change…
 
@@ -385,15 +412,19 @@ The keyword `volatile` aside from making sure changes to a variable is *visible*
 
 But, yet again, it is not enough…
 
-## So Many Issues! What Is The Right Answer??
+&nbsp;
+
+## 2.20. So Many Issues! What Is The Right Answer??
 
 
 
 [REVISE ISSUES THAN CAN ARISE IN CONCURRENCY AND THE SOLUTIONS WE HAVE DISCUSSED THUS FAR]
 
-## Make Everything Immutable.
+&nbsp;
 
+## 2.21. Make Everything Immutable.
 
+&nbsp;
 
 What is an immutable object?
 
@@ -419,9 +450,11 @@ So yes, an immutable object is thread-safe - but we might not want to apply this
 
 …so *what* is the answer here?
 
-## Intrinsic Locks
+&nbsp;
 
+## 2.22. Intrinsic Locks
 
+&nbsp;
 
 ![img](https://deviniti.com/wp-content/uploads/2019/09/460E9D08-1BED-4634-9F39-09025B867985-1.png)
 
@@ -431,7 +464,7 @@ Imagine, if you will, a program that will add all the numbers from 1 to 10.
 
 We could write this in a for loop.
 
-```javascript
+```java
 int num = 0;
 
 for(int i = 1; i <= 10; i++){
@@ -447,43 +480,48 @@ We should still expect the output to be 55, but in reality it’s not always the
 
 (Well, actually in reality it would be, just because threads can interleave doesn’t mean they always do. In order to actually see a difference we’d need to increase the number of iterations by *a lot* - so let’s do that!)
 
-```javascript
+```java
 private long num = 0;
 
-psvm(){
+public static void main(String[] args) {
 
-Thread t1 = new Thread(threadFunc());
-Thread t2 = new Thread(threadFunc2());
+	Thread t1 = new Thread(threadFunc());
+	Thread t2 = new Thread(threadFunc2());
 
-t1.start();
-t2.start();
+	t1.start();
+	t2.start();
 
-// throw in a thread sleep to give time for the threads to add.
+	// throw in a thread sleep to give time for the threads to add.
 
-sout(num);
-
+	System.out.println(num);
 }
 
 public Runnable threadFunc(){
-	return new Runnable() {
-		@Override
+	
+  return new Runnable() {
+	
+    @Override
 		public void run(){
 			for (int i = 1; i < 100000; i++) {
 				num = num + i;
 			}
 		}
-	};
+	
+  };
 }
 
 public Runnable threadFunc2(){
-	return new Runnable() {
-		@Override
+	
+  return new Runnable() {
+	
+    @Override
 		public void run(){
 			for (int i = 100000; i <= 200000; i++) {
 				num = num + i;
 			}
 		}
-	};
+	
+  };
 }
 ```
 
@@ -501,95 +539,97 @@ And yes, with numbers and incrementation we can certainly optimize this with `vo
 
 The token here is called an **Intrinsic Lock**. All Objects in Java have an intrinsic lock. A thread must have a hold of the lock in order to run a block of code - any other thread that attempts to run this code will be *blocked* from doing so until the previous thread has finished.
 
+&nbsp;
+
+## 2.23. Synchronized Blocks
+
 Let’s use a different analogy other than numbers. Let’s imagine we have a Cadet class and a Bathroom class.
 
-```javascript
+```java
 public class Cadet implements Runnable {
-    private String name;
-    private Bathroom wc;
+  
+  private String name;
+  private Bathroom wc;
 
+  public Cadet(String name, Bathroom wc) {
+    this.name = name;
+    this.wc = wc;
+  }
 
-    public Cadet(String name, Bathroom wc) {
-        this.name = name;
-        this.wc = wc;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void run() {
-
-        Thread.currentThread().setName(name);
-        wc.useToilet();
-    }
+  @Override
+  public void run() {
+    Thread.currentThread().setName(name);
+    wc.useToilet();
+  }
 
 }
+```
+
+```java
 public class Bathroom {
+  
+  public void useToilet() {
     
-    public void useToilet() {
-        
-            System.out.println(Thread.currentThread().getName() + " entering toilet");
-            System.out.println("*unzips*");
+    System.out.println(Thread.currentThread().getName() + " entering toilet");
+    System.out.println("*unzips*");
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(Thread.currentThread().getName() + " leaving toilet");
-
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+       e.printStackTrace();
     }
+
+    System.out.println(Thread.currentThread().getName() + " leaving toilet");
+  }
+  
 }
 ```
 
 If we instantiate a few Cadets and run their threads, it appears they all go into the bathroom at the same time! This is very undesirable behaviour. I want to make this method atomic and ensure that no other thread can perform these actions until the previous is finished. I need to *lock* the bathroom.
 
-```javascript
+&nbsp;
+
+```java
 public class Bathroom {
 
-    public void useToilet() {
-
-        synchronized (this) {
-
-            System.out.println(Thread.currentThread().getName() + " entering toilet");
-            System.out.println("*unzips*");
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(Thread.currentThread().getName() + " leaving toilet");
-
-        }
+  public void useToilet() {
+    
+    synchronized (this) {
+			// do stuff
     }
+    
+  }
+  
 }
 ```
 
 Now, each thread blocks, waiting for the lock to free up so they can then use the bathroom.
 
-### Method Synchronization vs Statement Synchronization
+
+
+## 2.24. Method Synchronization vs Statement Synchronization
 
 What is the difference between synchronizing a method vs a block of code?
 
-```javascript
+```java
 public synchronized void useToilet(){
-    // do stuff
+  // do stuff
 }
 
 public void useToilet(){
 
-    synchronized(this){
-        //do stuff
-    }
+  synchronized(this){
+    // do stuff
+  }
+  
 }
 ```
 
@@ -601,51 +641,53 @@ Another difference is the lock itself. A synchronized method always refers to `t
 
 A synchronized block can refer to different objects as the lock.
 
-```javascript
+```java
 public class Bathroom {
 
-private Toilet t1;
-private Toilet t2;
+	private Toilet t1;
+	private Toilet t2;
 
-public void useToilet1(){
+	public void useToilet1() {
 
-    synchronized(t1){
+    synchronized(t1) {
         //do a peepee
     }
 }
 
-public void useToilet2(){
+	public void useToilet2() {
 
-    synchronized(t2){
+    synchronized(t2) {
         //a different peepee
     }
-}
-
+	}
+  
 }
 ```
 
 One toilet being occupied is not reason for our Bathroom instance to be off-limits to other threads. Whilst thread-1 obtains the lock for **t1**, other threads can try to obtain the lock for **t2**.
 
-## Thread Synchronization with Guarded Blocks
+&nbsp;
 
+## 2.25. Thread Synchronization with Guarded Blocks
 
+&nbsp;
 
 Sometimes you only want a thread to execute a block of code when a certain event is true. One way we can achieve this is with a while loop.
 
-```javascript
+```java
 private boolean happy = false;
 
 public void guardedHappiness() {
 
-    while(!happy){
-        // do nothing.
-    }
+  while(!happy) {
+    // do nothing.
+  }
 
-    System.out.println("Happiness achieved!");
+  System.out.println("Happiness achieved!");
 }
 
-public void beHappy(){
-    happy = true;
+public void beHappy() {
+  happy = true;
 }
 ```
 
@@ -653,21 +695,12 @@ We could have one thread which invokes the guardedHappiness method and another w
 
 The problem is, our boolean `happy` is *shared and mutable* state, which in a mutli-threaded environment we must protect at all cost. Luckily, we know if we use the `synchronized` keyword, we protect our state from non-atomic operations.
 
-```javascript
+```java
 private boolean happy = false;
 
-public synchronized void guardedHappiness() {
+public synchronized void guardedHappiness() {...}
 
-    while(!happy){
-        // do nothing.
-    }
-
-    System.out.println("Happiness achieved!");
-}
-
-public synchronized void beHappy(){
-    happy = true;
-}
+public synchronized void beHappy() {...}
 ```
 
 But now we have introduced a problem. What do we know about synchronized and locks? Since both of our methods are synchronized and the lock is the instance, after the first thread has obtained the lock - *no other synchronized methods can be invoked on this instance until the lock is released*. If the thread holding the lock is trapped in a while loop, when does the lock get released?
@@ -697,7 +730,9 @@ It is important to have the `wait()` inside a while loop and not an if.
 
 [Discuss what could happen if we used an if and not a while]
 
-### Thread LifeCycle and Wait/Notify
+&nbsp;
+
+## 2.26. Thread LifeCycle and Wait/Notify
 
 ![img](https://imgur.com/StIIOC7.png)
 
@@ -707,13 +742,17 @@ By invoking the method wait() inside of a synchronized block - we send the Threa
 
 When another thread invokes notify or notifyAll within the same object, then the *non-runnable* threads become *runnable* again.
 
-## Producer/Consumer Problem
+&nbsp;
 
+## 2.27. Producer/Consumer Problem
 
+&nbsp;
 
 A classic example of a multi-process synchronization problem. Two processes, the producer and the consumer, who share a common fixed-size buffer which is a queue. The producer generates data, puts into the buffer and continues. At the same time, the consumer is consuming data one piece at at time. The trick is to make sure the producer cannot attempt to put data on the queue when it is full and the consumer cannot remove data from the queue when it is empty.
 
-### { BlockingQueue Exercise }
+&nbsp;
+
+## 2.28. {Exercise} Producer/Consumer using a Blocking Queue
 
 We will build a producer/consumer app using a blocking queue. I have a pizzeria and make and consume pizzas, but you guys can use whatever as the data, Strings, numbers, whatever. So Producers will add products to the queue and Consumers will consume products from the queue.
 
