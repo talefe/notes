@@ -1,7 +1,7 @@
 Authors:
 
-> [Christina Hinchin][mailto:christina.hinchin@academiadecodigo.org]
-> [Sara Talefe][mailto:sara.talefe@academiadecodigo.org]
+[Christina Hinchin][mailto:christina.hinchin@academiadecodigo.org]
+[Sara Talefe][mailto:sara.talefe@academiadecodigo.org]
 
 
 
