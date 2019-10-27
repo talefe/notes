@@ -140,8 +140,8 @@ We can then show our web-server running and the following examples:
 
 * access the root
 * access a resource like `localhost:8080/logo.png`
-* show what happens when you attemp a erquest to a ersource that does not exist `localhost:8080/verysillyresource.html`
-* remember the cadets that their respoonses need to start with the appropriate header and provide them with the necessary headers:
+* show what happens when you attemp a request to a resource that does not exist `localhost:8080/verysillyresource.html`
+* remember the cadets that their responses need to start with the appropriate header and provide them with the necessary headers:
 
 ```
 HTTP/1.0 200 Document Follows\r\n
