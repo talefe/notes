@@ -1,13 +1,11 @@
 Authors:
 
-[Christina Hinchin](mailto:christina.hinchin@academiadecodigo.org)
+[Christina Hinchin](mailto:christina.hinchin@academiadecodigo.org)  
 [Sara Talefe](mailto:sara.talefe@academiadecodigo.org)
 
+&nbsp;
 
-
-## 2.1. Introduction to Concurrency**
-
-
+## 2.1. Introduction to Concurrency
 
 Back in the dark ages, when programs were fed to a computer on a punched paper card, or on magnetic tape, these computers could only execute one program at a time. The program would be run sequentially and would access any resources it might need directly from the machine.
 
