@@ -36,5 +36,79 @@ Since some sites don't allow you to download recursively and will check what bro
 
 `wget -r -H --convert-links --level=NUMBER --user-agent=AGENT URL`
 
+####**java.net.URL** examples
+(the exercise "source-viewer" proposed in the slides is just the same as we see here when opening a stream and reading from it)
+
+```java
+public class JavaNetURLExample {
+    public static void main(String[] args) {
+        try {
+            // Generate absolute URL
+            // Base URL = www.gnu.org
+            URL url1 = new URL("http://www.gnu.org");
+            System.out.println("URL1: " + url1.toString());
+
+            // Generate URL for pages with a common base
+            URL url2 = new URL(url1, "licenses/gpl.txt");
+            System.out.println("URL2: " + url2.toString());
+
+            // Generate URLs from different pieces of data
+            URL url3 = new URL("http", "www.gnu.org", "/licenses/gpl.txt");
+            System.out.println("URL3: " + url3.toString());
+
+            URL url4 = new URL("http", "www.gnu.org", 80, "/licenses/gpl.txt");
+            System.out.println("URL4: " + url4.toString() + "\n");
+
+            // Open URL stream as an input stream and print contents to command line
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(url4.openStream()))) {
+                String inputLine;
+
+                // Read the "gpl.txt" text file from its URL representation
+                System.out.println("/***** File content (URL4) *****/n");
+                while((inputLine = in.readLine()) != null) {
+                    System.out.println(inputLine);
+                }
+            } catch (IOException ioe) {
+                ioe.printStackTrace(System.err);
+            }
+        } catch (MalformedURLException mue) {
+            mue.printStackTrace(System.err);
+        }
+    }
+}
+```
+
+
+``` java
+public class JavaNetURLMoreMethodsExample {
+    public static void main(String[] args) {
+        try {
+            // Creates a URL object from the String representation.
+            URL url = new URL("http://www.gnu.org/licenses/gpl.txt");
+
+            // Gets the authority part of this URL.
+            System.out.println("URL Authority: " + url.getAuthority());
+
+            // Gets the default port number of the protocol associated with this URL.
+            System.out.println("URL Default Port: " + url.getDefaultPort());
+
+            // Gets the file name of this URL.
+            System.out.println("URL File Name: " + url.getFile());
+
+            // Gets the host name of this URL, if applicable.
+            System.out.println("URL Host Name: " + url.getHost());
+
+            // Gets the path part of this URL.
+            System.out.println("URL Path: " + url.getPath());
+
+            // Gets the protocol name of this URL.
+            System.out.println("URL Protocol Name: " + url.getProtocol());
+        } catch (IOException ioe) {
+            ioe.printStackTrace(System.err);
+        }
+    }
+}
+
+```
 
 [http-status]:resources/images/http-status.jpg
