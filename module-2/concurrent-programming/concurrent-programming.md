@@ -110,9 +110,11 @@ Imagine if instead of being able to “multi-task” we could only ever do anyth
 
 &nbsp;
 
-## 2.5. {Hands-On} Timer
+## 2.5. {Hands-On} Implicit Thread Creation and Timers
 
 Java class from the `utils` package, used to schedule tasks for future execution in a background thread that corresponds to each `Timer` object. The `scheduleAtFixedRate()` recieves a `TimerTask` object and schedules this object for repeated fixed-rate execution, beginning either at a specified time or after a specified delay.
+
+[docs](https://gitlab.com/ac-bootcamp-materials/bootcamp/blob/master/docs/exercises/module_2_concurrency.adoc#user-content-hands-on-timers-and-implicit-thread-creation)
 
 &nbsp;
 
@@ -141,9 +143,9 @@ When creating a new Thread, we invoke the method start() which in turn, calls th
 
 &nbsp;
 
-## 2.7 {Hands-On} Thread Creation 
+## 2.7 {Hands-On} Explicit Thread Creation 
 
-
+[docs](https://gitlab.com/ac-bootcamp-materials/bootcamp/blob/master/docs/exercises/module_2_concurrency.adoc#user-content-hands-on-explicit-thread-creation)
 
 &nbsp;
 
@@ -163,9 +165,13 @@ The **join()** method allows one thread to wait for the completion of the other.
 
 ## 2.9. {Hands-On} Thread-Sync using Join 
 
+[docs](https://gitlab.com/ac-bootcamp-materials/bootcamp/blob/master/docs/exercises/module_2_concurrency.adoc#user-content-hands-on-thread-sync-using-join)
+
 &nbsp;
 
 ## 2.10. {Exercise} Concurrent WebServer
+
+[docs](https://gitlab.com/ac-bootcamp-materials/bootcamp/blob/master/docs/exercises/module_2_concurrency.adoc#user-content-exercise-concurrent-web-server)
 
 &nbsp;
 
@@ -806,6 +812,8 @@ We will build a producer/consumer app using a blocking queue. I have a pizzeria 
 - Consumers have a limit of products they can consume.
 - Each producer sleeps a random time before adding to the queue.
 - Each consumer removes something from the queue and sleeps a random time.
+
+[docs](https://gitlab.com/ac-bootcamp-materials/bootcamp/blob/master/docs/exercises/module_2_concurrency.adoc#user-content-exercise-producerconsumer-using-a-blocking-queue)
 
 &nbsp;
 
