@@ -15,8 +15,8 @@ Back in the dark ages, when programs were fed to a computer on a punched paper c
 
 ##### In order for a program to be executed:
 
-1. The instructions need to be stored in the system **RAM**.
-2. To be then sent to the **CPU** through the **Data, Address and Control BUSes**.
+1. The instructions need to be stored in the system **RAM**.  
+2. To be then sent to the **CPU** through the **Data, Address and Control BUSes**  
 3. Once they enter the **CPU**, they go down a queue usually called **Pipeline**.
 4. The **CPU** executes these instructions using various components _(p.e. Math Processor)_ 
    \* _Execution Engine_ is just a fancy name for many components.
@@ -196,18 +196,18 @@ L1 cache is a smaller and much faster cache, whereas L2 and even L3 are subseque
 
 &nbsp;
 
-| core1     | core2     | core3     | core4     |
-| --------- | --------- | --------- | --------- |
+|   core1   |   core2   |   core3   |   core4   |
+| :-------: | :-------: | :-------: | :-------: |
 | registers | registers | registers | registers |
 | L1 cache  | L1 cache  | L1 cache  | L1 cache  |
 
 | L2 cache | L2 cache |
-| -------- | -------- |
+| :------: | :------: |
 |          |          |
 
 | L3 cache |
-| -------- |
-| RAM      |
+| :------: |
+|   RAM    |
 
 &nbsp;
 
@@ -223,11 +223,11 @@ public class FieldVisibility {
   private int x = 0;
 
   public void writerThread(){
-      x = 1;
+    x = 1;
   }
 
   public void readerThread(){
-      int r1 = x;
+    int r1 = x;
   }
 
 }
@@ -243,8 +243,8 @@ public class FieldVisibility {
 |               | r1 = x;       |
 
 | shared cache |
-| ------------ |
-| x = 0;       |
+| :----------: |
+|    x = 0;    |
 
 &nbsp;
 
@@ -268,12 +268,14 @@ private int b = 0;
 private volatile int = x;
 
 public void writerThread(){
+  
   a = 1;
   b = 1;
   x = 1;   // volatile write
 }
 
 public void readThread(){
+  
   int r1 = x;  // volatile read
   int d1 = a;
   int d2 = b;
@@ -314,13 +316,15 @@ If an action is (or a set of actions are) atomic, it’s result must be seen to 
 private volatile long balance = 10;
 
 public void deposit(long x){
-	long b = getBalance();
-	setbalance(b + x);
+  
+  long b = getBalance();
+  setbalance(b + x);
 }
 
 public void withdraw(long x){
-	long b = getBalance();
-	setbalance(b - x);
+  
+  long b = getBalance();
+  setbalance(b - x);
 }
 ```
 
@@ -388,7 +392,9 @@ There is yet another problem working against us when we have multi-threading…
 
 Wait, what?
 
-Java is a procedural language. You tell Java how to do something for you. If Java executes your instructions not in the order you write, it would obviously not work. For example:
+Java is a procedural language. You tell Java how to do something for you. If Java executes your instructions not in the order you write, it would obviously not work. 
+
+For example:
 
 &nbsp;
 
@@ -397,8 +403,6 @@ Java is a procedural language. You tell Java how to do something for you. If Jav
 2. Pour salt in
 3. Cook for 3 hours
 ```
-
-&nbsp;
 
 If Java were to take this and execute it in 2->1->3, my soup would be hella bland.
 
@@ -484,10 +488,7 @@ So yes, an immutable object is thread-safe - but we might not want to apply this
 
 ![img](https://deviniti.com/wp-content/uploads/2019/09/460E9D08-1BED-4634-9F39-09025B867985-1.png)
 
-*Locks*.
-
-Imagine, if you will, a program that will add all the numbers from 1 to 10.
-
+Imagine, if you will, a program that will add all the numbers from 1 to 10.  
 We could write this in a for loop.
 
 &nbsp;
@@ -496,7 +497,7 @@ We could write this in a for loop.
 int num = 0;
 
 for(int i = 1; i <= 10; i++){
-	num += i;
+  num += i;
 }
 ```
 
@@ -504,8 +505,7 @@ for(int i = 1; i <= 10; i++){
 
 Printing the result of this will give me 55, always.
 
-Now what if I were to split this up into two threads - one that will count all the numbers from 1 to 5 and another from 6 to 10.
-
+Now what if I were to split this up into two threads - one that will count all the numbers from 1 to 5 and another from 6 to 10.  
 We should still expect the output to be 55, but in reality it’s not always the case.
 
 (Well, actually in reality it would be, just because threads can interleave doesn’t mean they always do. In order to actually see a difference we’d need to increase the number of iterations by *a lot* - so let’s do that!)
@@ -516,49 +516,40 @@ We should still expect the output to be 55, but in reality it’s not always the
 private long num = 0;
 
 public static void main(String[] args) {
-
-	Thread t1 = new Thread(threadFunc());
-	Thread t2 = new Thread(threadFunc2());
-
-	t1.start();
-	t2.start();
-
-	// throw in a thread sleep to give time for the threads to add.
-
-	System.out.println(num);
+  Thread t1 = new Thread(threadFunc());
+  Thread t2 = new Thread(threadFunc2());
+  t1.start();
+  t2.start();
+  
+  // throw in a thread sleep to give time for the threads to add.
+  System.out.println(num);
 }
 
 public Runnable threadFunc(){
-	
+  
   return new Runnable() {
-	
     @Override
-		public void run(){
-			for (int i = 1; i < 100000; i++) {
-				num = num + i;
-			}
-		}
-	
+    public void run(){
+      for (int i = 1; i < 100000; i++) {
+        num = num + i;
+      }
+    }
   };
 }
 
 public Runnable threadFunc2(){
-	
   return new Runnable() {
-	
     @Override
-		public void run(){
-			for (int i = 100000; i <= 200000; i++) {
-				num = num + i;
-			}
-		}
-	
+    public void run(){
+      for (int i = 100000; i <= 200000; i++) {
+        num = num + i;
+      }
+    }
   };
 }
 ```
 
-&nbsp;
-
+&nbsp;  
 The result we expect to see is 20000100000.
 
 But if we run the code several times, the outcome is always different. Why?
@@ -641,7 +632,7 @@ public class Bathroom {
   public void useToilet() {
     
     synchronized (this) {
-			// do stuff
+      // do stuff
     }
     
   }
@@ -666,9 +657,9 @@ public synchronized void useToilet(){
   // do stuff
 }
 
-public void useToilet(){
+public void useToilet() {
 
-  synchronized(this){
+  synchronizedv(this) {
     // do stuff
   }
   
@@ -690,22 +681,20 @@ A synchronized block can refer to different objects as the lock.
 ```java
 public class Bathroom {
 
-	private Toilet t1;
-	private Toilet t2;
-
-	public void useToilet1() {
-
+  private Toilet t1;
+  private Toilet t2;
+  
+  public void useToilet1() {
     synchronized(t1) {
-        //do a peepee
+      //do a peepee
     }
-}
-
-	public void useToilet2() {
-
+  }
+  
+  public void useToilet2() {
     synchronized(t2) {
-        //a different peepee
+      //a different peepee
     }
-	}
+  }
   
 }
 ```
@@ -767,7 +756,7 @@ We can do this with **guarded blocks.**
 
 &nbsp;
 
-```javascript
+```java
 public synchronized void guardedHappiness() {
 
     while(!happy){
