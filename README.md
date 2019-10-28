@@ -12,8 +12,6 @@ You should also have access to the Trello board where we organize who's in charg
 
 ## 2. Development
 
-&nbsp;
-
 ### 2.1. Project structure
 
 This project structure is just a bunch of directories mimicking the structure we have on our slides. Each **module** has an _index.md_ linking to all the docs for that particular module. 
@@ -33,7 +31,7 @@ Each **directory for a specific subject** has the same structure:
 
 ![Directory structure][directory-structure]
 
-
+&nbsp;
 
 ### 2.2. Trello
 
@@ -55,9 +53,6 @@ As follows:
 &nbsp;
 
 ## 3. Docs standards
-
-&nbsp;
-
 ### 3.1. Formatting rules
 
 * All the visual resources you need should be in the resources directory for that particular class. (this ensures we never have broken links, if a picture is removed from a certain server).
@@ -67,15 +62,18 @@ As follows:
 	> if you're trying to link to files in the resources folder, just wrap the location in <> to convert it to a link
 	
   
-
 * Use headers appropriately, the highest being level 3 and the lowest level 5 (more than that might be overkill, and we don't want more than 3 levels of indentation - eheheh). Using headers appropriately will make it easier to navigate through your doc file later.
 
 &nbsp;
 
 ### 3.2. md files organization
 
-* All files should start with a **_context_** section, to help contextualize the subject that we'll be talking about next.
+* Make sure these docs add **extra** information, contain frequently asked questions by the cadets and/or have code examples for hands-on demonstrations.
+
+* All files should start with a **context** section, to help contextualize the subject that we'll be talking about next.
+
 * It should have images and schemes where appropriate. If you did a really cool drawing in class, make sure to take a picture and upload it to the resources for that class, so that later people can reference it.
+
 * Use and link to outside resources, be it videos, tools, pictures, diagrams, what have you!
 
 &nbsp;
