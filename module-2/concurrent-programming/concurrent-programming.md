@@ -7,75 +7,73 @@ Authors:
 
 ## 2.1. Introduction to Concurrency
 
-Back in the dark ages, when programs were fed to a computer on a punched paper card, or on magnetic tape, these computers could only execute one program at a time. The program would be run sequentially and would access any resources it might need directly from the machine.
+Back in the dark ages, when programs were fed to a computer on a punched paper card, or on magnetic tape, these **computers could only execute one program at a time**. The program would be run **sequentially** and would access any resources it might need directly from the machine.
 
 &nbsp;
 
-![Single Core CPU][single-core-cpu]*Program In Execution In Memory in a Single-Core CPU*
+*Program In Execution In Memory in a Single-Core CPU*![Single Core CPU][single-core-cpu]
 
-##### In order for a program to be executed:
+&nbsp;
 
-1. The instructions need to be stored in the system **RAM**.  
+In order for a program to be executed:
+
+1. The instructions need to be stored in the system **RAM**  
 2. To be then sent to the **CPU** through the **Data, Address and Control BUSes**  
-3. Once they enter the **CPU**, they go down a queue usually called **Pipeline**.
+3. Once they enter the **CPU**, they go down a queue usually called **Pipeline**
 4. Every **CPU** has a **Clock** that runs at a certain frequency _(p.e. 2GHz)_
-5. Eventually, the **CPU** executes each instruction with the help of various components _(p.e. Math Processor)_  
-	*_Execution Engine_ is just a fancy name for many components.
-
-
+5. Eventually, the **CPU** executes each instruction with the help of various components *(p.e. Math Processor)*  
+**Execution Engine* is just a fancy name for many components
+	
 &nbsp;
 
-**Operating systems** evolved to allow more than one program to run at once, running individual programs in processes. This is analogous to the real life. When you're at home making dinner and finishing the summarizer for the next day *at the same time*, what you are really doing is cutting up some onions and adding them to the pan, then finding that funny meme for the presentation, then quickly stirring the onions so they don’t burn, then switching back to your laptop - otherwise known as *multi-tasking*.
+**Operating systems** evolved to allow more than one program to run at once, running individual programs in *processes*.
 
- You can browse reddit on the browser and listen to music on Spotify at the same time. You can edit a document on word processor, while other applications can download files from the internet, at the same time.
+This is analogous to the real life. When you're at home making dinner and finishing the summarizer for the next day *at the same time*, what you are really doing is cutting up some onions and adding them to the pan, then finding that funny meme for the presentation, then quickly stirring the onions so they don’t burn, then switching back to your laptop - otherwise known as *multi-tasking*.
 
-So, concurrency can be thought of as `the ability to do more than one thing at the same time`. But how is that possible? How can multiple tasks execute at the same time even on a single CPU?
+You can surf the web on a browser and listen to music on Spotify *at the same time*. You can edit a document on word processor, while other applications can download files from the internet, *at the same time*.
+
+So, **concurrency** can be thought of as `the ability to do more than one thing at the same time`. But how is that possible? How can multiple tasks execute at the same time even on a single CPU?
 Well, in truth, they don’t execute at the same exact time.
 
 When we say “multiple tasks are executing at the same time”, what we *actually* mean is that “multiple tasks are making progress during the same period of time.” The tasks are executed in an interleaved manner. And the way this happens is through the Operating System. It switches between the tasks so frequently that it appears like they are being executed at the same instant when in fact, they aren’t.
 
 &nbsp;
 
-**Example of how an operating system achieves _multi-tasking_**
+If they needed to, processes could communicate with one another through a variety of **Inter-Process Communication** (**IPC**) mechanisms: sockets, signal handlers, shared memory, semaphores, and files.
 
-![Pre-emptive Multi-Tasking][pre-emptive-multitasking]*Pre-emptive Multitasking - In this example, **Word** and **Excel** are two different programs in execution in memory, two different processes running. The Scheduler is responsible for allocating CPU time to each process using criteria like priority (circled numbers) to decide.*
+> **Sockets**, you guys are already pretty familiar with. How many processes are running in our Chat program? The Server and the Client. In order to send information between these two processes, we used sockets to send and recieve data.
 
-&nbsp;
-
-If they needed to, processes could communicate with one another through a variety of Inter-Process Communication (IPC) mechanisms: sockets, signal handlers, shared memory, semaphores, and files.
-
-> Sockets, you guys are already pretty familiar with. How many processes are running in our Chat program? The Server and the Client. In order to send information between these two processes, we used sockets to send and recieve data.
-
-An example of a signal that you’ve used before is the ctrl-C to kill a program.
+An example of a **signal** that you’ve used before is the ctrl-C to kill a program.
 
 `$ ^C`
 
 It is not actually you shutting down the program - you are just sending a signal via the operating system that you wish to terminate the program. The OS passes on this signal to the process and it shuts itself down.
 
-A semaphore restricts the number of simultaneous users of a shared resource up to a maximum number. Threads can request access to the resource (decrementing the semaphore), and can signal that they have finished using the resource (incrementing the semaphore).
+# ------------ TODO ------------
+**Semaphores** are classified into two types:
 
+* *Binary Semaphores* − Only two states 0 & 1, i.e., locked/unlocked or available/unavailable, Mutex implementation.
+* *Counting Semaphores* − Semaphores which allow arbitrary resource count are called counting semaphores.
+
+Assume that we have 5 printers (to understand assume that 1 printer only accepts 1 job) and we got 3 jobs to print. Now 3 jobs would be given for 3 printers (1 each). Again 4 jobs came while this is in progress. Now, out of 2 printers available, 2 jobs have been scheduled and we are left with 2 more jobs, which would be completed only after one of the resource/printer is available. This kind of scheduling as per resource availability can be viewed as counting semaphores.
 &nbsp;
 
 ## 2.2. Threads
 
 Concurrency doesn’t necessarily involve multiple applications. Running multiple parts of a single application simultaneously is also termed as concurrency.
 
-A word processor formats the text AND responds to keyboard events *at the same time*. Spotify reads the audio from the network, decompresses it and updates the display *at the same time*. And a web server serves thousands of requests from all over the world *at the same time*.
+* A Word Processor formats the text AND responds to keyboard events *at the same time*. 
+* Spotify reads the audio from the network, decompresses it and updates the display *at the same time*.
+* A Web Server serves thousands of requests from all over the world *at the same time*.
 
-These smaller parts of a Process that can run concurrently are known as **Threads**. The act of multiple threads running concurrently is known as *Multi-threading*.
+These smaller parts of a **Process** that can run concurrently are known as **Threads**. The act of multiple threads running concurrently is known as *Multi-Threading*.
 
-A thread is a path of execution within a process. Every process has at least one thread - called the main thread. This main thread can create additional threads within the process. All of the threads within a process share the same resources such as memory and file handles.
+A thread is a *unit of execution within a process*. Every process has at least one thread - called the **main** thread. This main thread can create additional threads within the process. 
 
-Every thread does have, however, its own call stack and local variables.
+All of the threads within a process share the same resources such as memory and file handles. However, every thread has its own call stack and local variables.
 
-**Our program: How to cook dinner:**
 
-* Boil water and cook spaghetti
-* Cut the veggetables
-* Cook the meat
-* Pour a glass of wine
-
-In real life, you'd execute these instructions **asynchronously**. You'd start by warming the water, then peeling and cutting the veggies, when the water is boiling, adding the spaghetti, .... At each step of the process, you'd start a task, and switch to the tasks that are ready for your attention.
+In real life, you execute tasks **asynchronously**. If you're cooking some pasta with , you'd start by warming the water, then peeling and cutting the veggies, when the water is boiling, adding the spaghetti, .... At each step of the process, you'd start a task, and switch to the tasks that are ready for your attention.
 
 &nbsp;
 
@@ -83,7 +81,8 @@ In real life, you'd execute these instructions **asynchronously**. You'd start b
 
 ![multithreading visual representation][multithreading]
 
-Since threads share the same address space of the process, creating new threads and communicating between them is a lot more efficient.
+Since threads share the same address space of the process, creating new threads and 
+having them communicate is a lot more efficient.
 
 Concurrency overall greatly improves the capacity of a computer - with it we simply can get a lot more done. But with great performance, comes a few issues.
 
@@ -119,11 +118,8 @@ Java class from the `utils` package, used to schedule tasks for future execution
 
 ### Why not use _Thread.sleep()_ ?
 
-Because Thread.sleep(n) is a big fat lie. You think that it blocks a thread for a given number of milliseconds, but what it actually does is block the current thread for a given number of *timeslices* that can occur within a set number of milliseconds. The length of a timeslice depends on the version of the Operating System and processor, generally ranging from 15 to 30 milliseconds. So basically you are almost guaranteed to block your thread for more than `n` milliseconds. For precision timing, Thread.sleep() is absolutely *useless*.
+For precision timing, Thread.sleep() is absolutely *useless* and a big fat lie. You think that it blocks a thread for a given number of milliseconds, but what it actually does is block the current thread for a given number of *timeslices* that can occur within a set number of milliseconds. The length of a timeslice depends on the version of the Operating System and processor, generally ranging from 15 to 30 milliseconds. So basically you are almost guaranteed to block your thread for more than `n` milliseconds. .
 
-#### Ok, back to our Timer class.
-
-The Timer method we are going to use recieves a TimerTask object, which is an abstract class, so we are going to create a subclass and override the `run` method.
 
 &nbsp;
 
