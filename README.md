@@ -62,7 +62,8 @@ As follows:
 	> if you're trying to link to files in the resources folder, just wrap the location in <> to convert it to a link
 	
   
-* Use headers appropriately, the highest being level 3 and the lowest level 5 (more than that might be overkill, and we don't want more than 3 levels of indentation - eheheh). Using headers appropriately will make it easier to navigate through your doc file later.
+* Use headers appropriately, don't abuse them. Headers lives matter.  
+No, but seriously, we usually use level 2 to identify slide number, and lower levels where appropriate. Using headers appropriately will make it easier to navigate through your doc file later.
 
 &nbsp;
 
