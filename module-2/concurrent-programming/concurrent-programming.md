@@ -2,6 +2,7 @@ Authors:
 
 [Christina Hinchin](mailto:christina.hinchin@academiadecodigo.org)  
 [Sara Talefe](mailto:sara.talefe@academiadecodigo.org)
+[Diogo Rolo](mailto:diogo.rolo@academiadecodigo.org)
 
 &nbsp;
 
@@ -177,10 +178,10 @@ The **join()** method allows one thread to wait for the completion of the other.
 
 ## 2.11. Thread Safety
 
-> Concurrent programming isn’t so much about threads or locks, any more than civil engineering is about rivets and I-beams. Of course, building bridges that don’t fall down requires the correct use of these things, just as concurrent programs require the correct use of threads and locks. But these are just mechanisms - means to an end. Writing thread-safe code is, at its core, about managing access to state, and in particular to shared, mutable state.
+> Concurrent programming isn’t so much about **_threads_** or **_locks_**, any more than civil engineering is about rivets and I-beams. Of course, building bridges that don’t fall down requires the correct use of these things, just as concurrent programs require the correct use of threads and locks. But these are just *mechanisms* - means to an end. **Writing thread-safe code is, at its core, about managing access to state, and in particular to shared, mutable state.**.  
 > — Java Concurrency in Practice
 
-Multithreading is a very powerful tool which enables us to better utilise the systems resources, but we need to take special care while reading and writing data that is *shared* by multiple threads.
+Multithreading is a very powerful tool which enables us to better utilize the system's resources, but we need to take special care while reading and writing data that is *shared* by multiple threads.
 
 Concurrent programming errors fall into one of these three categories:
 
@@ -192,28 +193,22 @@ Concurrent programming errors fall into one of these three categories:
 
 ## 2.12. Visibility
 
-Firstly, what is visibility? The name says it all. That the actions of one thread may be *visible* to another. The problem is this isn’t always the case.
+Firstly, **what is visibility**? The name says it all. **That the actions of one thread may be *visible* to another**. The problem is this isn’t always the case.
+
+In order to understand this issue, we need to learn a bit more about how a modern-day CPU works.
 
 Retrieving and writing data to the Memory has always been a slow process. Before, processors were equally slow so this wasn’t such a great issue, but as processors became a lot faster, the gap between the two in terms of performance widened and became far more noticeable.
 
 With the introduction of caches things became a whole lot faster. Caches are another form of memory which is incredibly fast. When the CPU accesses something from your main memory, it stores this data in its CPU cache. The next time it needs that same data, rather than grabbing it from the main memory, which is slow, it first checks its cache and takes it from there.
 
-L1 cache is a smaller and much faster cache, whereas L2 and even L3 are subsequently larger and slower layers of cache. If there isn’t something stored in the L1 cache, the CPU checks its L2, then L3 and so forth.
+**L1, L2 and L3 caches** are different memory pools similar to the RAM in a computer. **They were built in to decrease the time taken to access data by the processor.** This time taken is called **_latency_**. The architecture they are built with also differs considerably. 
+>The L1 cache is built using larger transistors and wider metal tracks, trading off space and power for speed. The higher level caches are more tightly packed and use smaller transistors. [Read More][l1-l2-l3-cache-article]
+
+So, L1 cache is a smaller and much faster cache, whereas L2 and even L3 are subsequently larger and slower layers of cache. If there isn’t something stored in the L1 cache, the CPU checks its L2, then L3 and so forth.
 
 &nbsp;
 
-|   core1   |   core2   |   core3   |   core4   |
-| :-------: | :-------: | :-------: | :-------: |
-| registers | registers | registers | registers |
-| L1 cache  | L1 cache  | L1 cache  | L1 cache  |
-
-| L2 cache | L2 cache |
-| :------: | :------: |
-|          |          |
-
-| L3 cache |
-| :------: |
-|   RAM    |
+![L1, L2 & L3 Cache][l1-l2-l3-cache]
 
 &nbsp;
 
@@ -273,30 +268,38 @@ private int a = 0;
 private int b = 0;
 private volatile int = x;
 
-public void writerThread(){
+// Thread-1
+public void write(){
   
   a = 1;
   b = 1;
   x = 1;   // volatile write
 }
 
-public void readThread(){
+// Thread-2
+public void read(){
   
-  int r1 = x;  // volatile read
-  int d1 = a;
-  int d2 = b;
+  System.out.println(x);  // volatile read
+  System.out.println(a);
+  System.out.println(b)
 }
 ```
 
 &nbsp;
 
+<<<<<<< Updated upstream
 So, the changes that were made to a and b - before the volatile write - will become visible after the volatile read - to d1 and d2.
+=======
+When the Thread-1 changes **_x_**, it will not only flush this change to main memory, but **it will also cause the previous two writes** (and any other previous writes) **to be flushed into the main memory as well!** As a result, when the second thread accesses these three variables it will see all the writes made by thread 1, even if they were all cached before (and these cached copies will be updated as well)! 
+
+But, volatile is not always enough.
+>>>>>>> Stashed changes
 
 &nbsp;
 
-## 2.14. Volatile is Not Always Enough
+## 2.14. Atomicity
 
-In the previous example where one thread performs a read and write whilst the other simply performs a read, then making sure our variable is volatile ensures that the second thread will always see the changes the first thread is making.
+In the previous example where one thread performs a write and write whilst the other simply performs a read, by declaring a variable is volatile we ensured that the second thread will always see the changes the first thread is making.
 
 In fact, *multiple* threads could write to a shared volatile variable, and still have the correct value stored in main memory, as long as the new value written to the variable **does not depend on its previous value.**
 
@@ -306,7 +309,20 @@ However, as soon as a thread needs to first *read* the value, and *based* on tha
 counter++
 ```
 
+<<<<<<< Updated upstream
 Is in reality two separate operations - first a read and then a write. In order to make this operation **thread safe**, we need it to act as if it was one operation. We need it to be *atomic.*
+=======
+is in reality 
+
+
+```java
+counter = counter + 1;
+```
+
+two separate operations: a read and then a write. 
+
+In order to make this operation **thread safe**, we need it to act as if it was one operation. We need it to be *atomic*.
+>>>>>>> Stashed changes
 
 &nbsp;
 
@@ -332,17 +348,21 @@ public void withdraw(long x){
   long b = getBalance();
   setbalance(b - x);
 }
+
+// Thread-2
+withdraw(5);
+
+// Thread-1
+deposit(5);
 ```
 
 &nbsp;
 
-Two threads, one that withdraws(5) and another that deposits(5);
-
 If this was single-threaded, we would expect to see the output 10, no matter which order these two methods are called. But in a multi-threaded environment, this result isn’t guaranteed.
 
-- The deposit() method sees a value of 10 for the balance, then
-- The withdraw() method sees a value of 10 for the balance *and* withdraws 5, leaving a balance of 5, and finally
-- The deposit() method uses the balance it originally saw (10) to calculate a new balance of 15.
+- Thread-1 reads the `balance` and sees a value of 10, then
+- Thread-2 reads the `balance` and sees a value of 10 for the balance *and* withdraws 5, writing the value 5 in `balance`, finally
+- Thread-1 uses the value it originally saw (10) and writes the value 15 in `balance`.
 
 Because these methods are not atomic, the result is not what we expected. We need to find a way to say that this set of instructions is to be executed *as one unit.*
 
@@ -398,6 +418,7 @@ There is yet another problem working against us when we have multi-threading…
 
 Wait, what?
 
+<<<<<<< Updated upstream
 Java is a procedural language. You tell Java how to do something for you. If Java executes your instructions not in the order you write, it would obviously not work. 
 
 For example:
@@ -413,6 +434,9 @@ For example:
 If Java were to take this and execute it in 2->1->3, my soup would be hella bland.
 
 So how come the Java compiler has the possibility of changing the order of execution? Well, because Java is clever.
+=======
+Java is an imperative language. You tell Java *how* to do something for you. If Java executed your instructions not in the order you write, it would obviously not work. 
+>>>>>>> Stashed changes
 
 &nbsp;
 
@@ -527,7 +551,7 @@ public static void main(String[] args) {
   t1.start();
   t2.start();
   
-  // throw in a thread sleep to give time for the threads to add.
+  // add in a Thread.sleep(1000) to give time for the two threads to finish.
   System.out.println(num);
 }
 
@@ -560,13 +584,21 @@ The result we expect to see is 20000100000.
 
 But if we run the code several times, the outcome is always different. Why?
 
-Well, as you can imagine - with two threads running concurrently, there is quite a bit of data interference. Both threads are causing consecutive overwrites, manipulating data “out of turn” so to speak. Whilst we don’t want the one thread to wait for the other to finish adding his 100,000 before it can start - we want them to take turns incrementing data so it is always in a fresh, updated state.
+Well, as you can imagine - with two threads running concurrently, there is quite a bit of data interference. Both threads are causing consecutive overwrites, manipulating data “out of turn” so to speak. Whilst we don’t want one thread to wait for the other to finish adding his 100,000 before it can start - we want them to take turns incrementing data so it is always in a fresh, updated state.
 
 ![img](https://imgur.com/YbrR5GS.png)
 
+<<<<<<< Updated upstream
 And yes, with numbers and incrementation we can certainly optimize this with `volatile` and atomic wrappers, but if we increased the complexity of these operations a little bit more, we’d be at a loss. *Unless…*
 
 *Unless* we add a token of sorts. A thread **must** be holding the token in order to perform an operation and when he his finished, he can hand his token over to the next thread. This thread performs the action it needs to do and only once *it* is finished, can the other thread then take back the token and so forth.
+=======
+And yes, with numbers and incrementation we can certainly optimize this with `volatile` and atomic wrappers, but if we increased the complexity of these operations a little bit more, we’d be at a loss. 
+
+*Unless*...
+
+*Unless* we add a token of sorts. A thread **must** be holding the token in order to perform an operation and when it has finished, the token is freed to be used by any thread. 
+>>>>>>> Stashed changes
 
 The token here is called an **Intrinsic Lock**. All Objects in Java have an intrinsic lock. A thread must have a hold of the lock in order to run a block of code - any other thread that attempts to run this code will be *blocked* from doing so until the previous thread has finished.
 
@@ -652,9 +684,9 @@ Now, each thread blocks, waiting for the lock to free up so they can then use th
 
 &nbsp;
 
-## 2.24. Method Synchronization vs Statement Synchronization
+## 2.24. Method Synchronization *vs* Statement Synchronization
 
-What is the difference between synchronizing a method vs a block of code?
+What is the difference between synchronizing a method *vs* a block of code?
 
 &nbsp;
 
@@ -821,25 +853,34 @@ We will build a producer/consumer app using a blocking queue. I have a pizzeria 
 
 #### Resources:
 
-* [How computers work and difference between process and thread][process-vs-threads-video]
+* [\[Video\] How computers work and difference between process and thread][process-vs-threads-video]
 
-* [Introduction to Operating System Multitasking][multithreading-video]
+* [\[Video\] Introduction to Operating System Multitasking][multithreading-video]
 
-* [Inter Process Communication][inter-process-communication-video]
+* [\[Video\] Inter Process Communication][inter-process-communication-video]
 
   
 
-[single-core-cpu]: resources/images/single-core-cpu.png
-[pre-emptive-multitasking]: resources/images/pre-emptive-multitasking.png
-[multi-tasking-os]: resources/images/multi-tasking-os.png
+[single-core-cpu]: <resources/images/single-core-cpu.png>
+[pre-emptive-multitasking]: <resources/images/pre-emptive-multitasking.png>
+[multi-tasking-os]: <resources/images/multi-tasking-os.png>
+[l1-l2-l3-cache]: <resources/images/l1-l2-l3-cache.png>
 [multithreading]: https://www.tutorialspoint.com/operating_system/images/thread_processes.jpg
+
 [multithreading-video]: https://www.youtube.com/watch?v=t-zgY7zV9tk
 [process-vs-threads-video]: https://www.youtube.com/watch?v=exbKr6fnoUw
 [inter-process-communication-video]: <https://www.youtube.com/watch?v=W0BX6geRCDQ>
-[thread-sleep-bad-article]: <https://blogs.msmvps.com/peterritchie/2007/04/26/thread-sleep-is-a-sign-of-a-poorly-designed-program/>
 [basic-thread-mechanisms-video]: <https://www.youtube.com/watch?v=Hdd1BlnI4GQ>
 [kernel-vs-user-level-threads-video]: <https://www.youtube.com/watch?v=_5q8ZK6hwzM>
 [process-context-switch-video]: <https://www.youtube.com/watch?v=lS1GOdXFLJo>
 [basic-thread-management-interactions-video]: <https://www.youtube.com/watch?v=oKJqqvnjl_s>
-[asynchronous-programming-with-async-await-article]: <https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/>
-[semaphore-and-mutex-article]: <https://crunchify.com/what-is-java-semaphore-and-mutex-java-concurrency-multithread-explained-with-example/ >
+
+[thread-sleep-bad-post]: <https://blogs.msmvps.com/peterritchie/2007/04/26/thread-sleep-is-a-sign-of-a-poorly-designed-program/>
+[asynchronous-programming-with-async-await-post]: <https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/>
+[semaphore-and-mutex-post]: <https://crunchify.com/what-is-java-semaphore-and-mutex-java-concurrency-multithread-explained-with-example/>
+[thread-vs-runnable-post]:<https://www.callicoder.com/java-multithreading-thread-and-runnable-tutorial/>
+[volatile-memory-consistency-post]: <https://dzone.com/articles/java-multi-threading-volatile-variables-happens-be-1>
+[l1-l2-l3-cache-post]: <https://specialties.bayt.com/en/specialties/q/305444/what-is-the-difference-between-l1-l2-and-l3-cache-memory/>
+
+
+
