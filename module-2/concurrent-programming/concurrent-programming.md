@@ -50,15 +50,15 @@ An example of a **signal** that you’ve used before is the ctrl-C to kill a pro
 
 It is not actually you shutting down the program - you are just sending a signal via the operating system that you wish to terminate the program. The OS passes on this signal to the process and it shuts itself down.
 
-# ------------ TODO ------------
+
 **Semaphores** are classified into two types:
 
 * *Binary Semaphores* − Only two states 0 & 1, i.e., locked/unlocked or available/unavailable, Mutex implementation.
 * *Counting Semaphores* − Semaphores which allow arbitrary resource count are called counting semaphores.
 
-Assume that we have 5 printers (to understand assume that 1 printer only accepts 1 job) and we got 3 jobs to print. Now 3 jobs would be given for 3 printers (1 each). Again 4 jobs came while this is in progress. Now, out of 2 printers available, 2 jobs have been scheduled and we are left with 2 more jobs, which would be completed only after one of the resource/printer is available. This kind of scheduling as per resource availability can be viewed as counting semaphores.
-&nbsp;
+Assume that we have 5 printers (to understand assume that 1 printer only accepts 1 job) and we got 3 jobs to print. Now 3 jobs would be given for 3 printers (1 each). While this is in progress, 4 more jobs came. Now, out of 2 printers available, 2 jobs have been scheduled and we are left with 2 more jobs, which would be completed only after one of the resource/printer is available. This kind of scheduling as per resource availability can be viewed as counting semaphores.
 
+&nbsp;
 ## 2.2. Threads
 
 Concurrency doesn’t necessarily involve multiple applications. Running multiple parts of a single application simultaneously is also termed as concurrency.
@@ -74,7 +74,7 @@ A thread is a *unit of execution within a process*. Every process has at least o
 All of the threads within a process share the same resources such as memory and file handles. However, every thread has its own call stack and local variables.
 
 
-In real life, you execute tasks **asynchronously**. If you're cooking some pasta with , you'd start by warming the water, then peeling and cutting the veggies, when the water is boiling, adding the spaghetti, .... At each step of the process, you'd start a task, and switch to the tasks that are ready for your attention.
+In real life, you execute tasks **asynchronously**. If you're cooking some carbonara, you'd start by warming the water, then peeling and cutting the veggies, when the water is boiling, adding the spaghetti, .... At each step of the process, you'd start a task, and switch to the tasks that are ready for your attention.
 
 &nbsp;
 
@@ -265,7 +265,6 @@ private volatile int = x;
 
 // Thread-1
 public void write(){
-  
   a = 1;
   b = 1;
   x = 1;   // volatile write
@@ -273,7 +272,6 @@ public void write(){
 
 // Thread-2
 public void read(){
-  
   System.out.println(x);  // volatile read
   System.out.println(a);
   System.out.println(b)
@@ -288,7 +286,7 @@ But, volatile is not always enough.
 
 &nbsp;
 
-## 2.14. Atomicity
+## 2.14./15./16. Atomicity
 
 In the previous example where one thread performs a write and write whilst the other simply performs a read, by declaring a variable is volatile we ensured that the second thread will always see the changes the first thread is making.
 
@@ -312,8 +310,6 @@ two separate operations: a read and then a write.
 In order to make this operation **thread safe**, we need it to act as if it was one operation. We need it to be *atomic*.
 
 &nbsp;
-
-## 2.15. Atomicity
 
 > Atom - derived from the Greek word *atomos* which means “Indivisible”
 
@@ -483,9 +479,9 @@ So yes, an immutable object is thread-safe - but we might not want to apply this
 
 &nbsp;
 
-## 2.22. Intrinsic Locks - NEEDS REVIEW
+## 2.22. Intrinsic Locks
 
-![img](https://deviniti.com/wp-content/uploads/2019/09/460E9D08-1BED-4634-9F39-09025B867985-1.png)
+![img][lock]
 
 Imagine, if you will, a program that will add all the numbers from 1 to 10.  
 We could write this in a for loop.
@@ -782,7 +778,7 @@ The first thread enters the method when `happy` is false and *waits*. It will wa
 
 It is important to have the `wait()` inside a while loop and not an if.
 
-[Discuss what could happen if we used an if and not a while]
+> Discuss what could happen if we used an if and not a while.
 
 &nbsp;
 
@@ -835,6 +831,7 @@ We will build a producer/consumer app using a blocking queue. I have a pizzeria 
 [multi-tasking-os]: <resources/images/multi-tasking-os.png>
 [l1-l2-l3-cache]: <resources/images/l1-l2-l3-cache.png>
 [multithreading]: https://www.tutorialspoint.com/operating_system/images/thread_processes.jpg
+[lock]: <resources/images/lock.png>
 
 [multithreading-video]: https://www.youtube.com/watch?v=t-zgY7zV9tk
 [process-vs-threads-video]: https://www.youtube.com/watch?v=exbKr6fnoUw
