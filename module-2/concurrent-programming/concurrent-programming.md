@@ -50,15 +50,15 @@ An example of a **signal** that you’ve used before is the ctrl-C to kill a pro
 
 It is not actually you shutting down the program - you are just sending a signal via the operating system that you wish to terminate the program. The OS passes on this signal to the process and it shuts itself down.
 
-
+# ------------ TODO ------------
 **Semaphores** are classified into two types:
 
 * *Binary Semaphores* − Only two states 0 & 1, i.e., locked/unlocked or available/unavailable, Mutex implementation.
 * *Counting Semaphores* − Semaphores which allow arbitrary resource count are called counting semaphores.
 
-Assume that we have 5 printers (to understand assume that 1 printer only accepts 1 job) and we got 3 jobs to print. Now 3 jobs would be given for 3 printers (1 each). While this is in progress, 4 more jobs came. Now, out of 2 printers available, 2 jobs have been scheduled and we are left with 2 more jobs, which would be completed only after one of the resource/printer is available. This kind of scheduling as per resource availability can be viewed as counting semaphores.
-
+Assume that we have 5 printers (to understand assume that 1 printer only accepts 1 job) and we got 3 jobs to print. Now 3 jobs would be given for 3 printers (1 each). Again 4 jobs came while this is in progress. Now, out of 2 printers available, 2 jobs have been scheduled and we are left with 2 more jobs, which would be completed only after one of the resource/printer is available. This kind of scheduling as per resource availability can be viewed as counting semaphores.
 &nbsp;
+
 ## 2.2. Threads
 
 Concurrency doesn’t necessarily involve multiple applications. Running multiple parts of a single application simultaneously is also termed as concurrency.
@@ -74,7 +74,7 @@ A thread is a *unit of execution within a process*. Every process has at least o
 All of the threads within a process share the same resources such as memory and file handles. However, every thread has its own call stack and local variables.
 
 
-In real life, you execute tasks **asynchronously**. If you're cooking some carbonara, you'd start by warming the water, then peeling and cutting the veggies, when the water is boiling, adding the spaghetti, .... At each step of the process, you'd start a task, and switch to the tasks that are ready for your attention.
+In real life, you execute tasks **asynchronously**. If you're cooking some pasta with , you'd start by warming the water, then peeling and cutting the veggies, when the water is boiling, adding the spaghetti, .... At each step of the process, you'd start a task, and switch to the tasks that are ready for your attention.
 
 &nbsp;
 
@@ -265,6 +265,7 @@ private volatile int = x;
 
 // Thread-1
 public void write(){
+  
   a = 1;
   b = 1;
   x = 1;   // volatile write
@@ -272,6 +273,7 @@ public void write(){
 
 // Thread-2
 public void read(){
+  
   System.out.println(x);  // volatile read
   System.out.println(a);
   System.out.println(b)
@@ -286,7 +288,7 @@ But, volatile is not always enough.
 
 &nbsp;
 
-## 2.14./15./16. Atomicity
+## 2.14. Atomicity
 
 In the previous example where one thread performs a write and write whilst the other simply performs a read, by declaring a variable is volatile we ensured that the second thread will always see the changes the first thread is making.
 
@@ -310,6 +312,8 @@ two separate operations: a read and then a write.
 In order to make this operation **thread safe**, we need it to act as if it was one operation. We need it to be *atomic*.
 
 &nbsp;
+
+## 2.15. Atomicity
 
 > Atom - derived from the Greek word *atomos* which means “Indivisible”
 
@@ -479,9 +483,9 @@ So yes, an immutable object is thread-safe - but we might not want to apply this
 
 &nbsp;
 
-## 2.22. Intrinsic Locks
+## 2.22. Intrinsic Locks - NEEDS REVIEW
 
-![img][lock]
+![img](https://deviniti.com/wp-content/uploads/2019/09/460E9D08-1BED-4634-9F39-09025B867985-1.png)
 
 Imagine, if you will, a program that will add all the numbers from 1 to 10.  
 We could write this in a for loop.
@@ -778,7 +782,7 @@ The first thread enters the method when `happy` is false and *waits*. It will wa
 
 It is important to have the `wait()` inside a while loop and not an if.
 
-> Discuss what could happen if we used an if and not a while.
+[Discuss what could happen if we used an if and not a while]
 
 &nbsp;
 
@@ -796,21 +800,201 @@ When another thread invokes notify or notifyAll within the same object, then the
 
 ## 2.27. Producer/Consumer Problem
 
-A classic example of a multi-process synchronization problem. Two processes, the producer and the consumer, who share a common fixed-size buffer which is a queue. The producer generates data, puts into the buffer and continues. At the same time, the consumer is consuming data one piece at a time. The trick is to make sure the producer cannot attempt to put data on the queue when it is full and the consumer cannot remove data from the queue when it is empty.
+A classic example of a multi-process synchronization problem. Two entities, the producer and the consumer, who share a common fixed-size buffer which they use as a qeue. The producer generates data, tries to put it into the buffer and repeat. At the same time, the consumer is attempting to consume data one piece at a time.  
+The goal is to make sure the producer cannot attempt to put data on the queue when it is full and the consumer cannot remove data from the queue when it is empty.
+
+
 
 &nbsp;
 
-## 2.28. {Exercise} Producer/Consumer using a Blocking Queue
+## 2.28. {Exercise} - Producer-consumer using a (created) BlockingQeue
+#### Objective  
 
-We will build a producer/consumer app using a blocking queue. I have a pizzeria and make and consume pizzas, but you guys can use whatever as the data, Strings, numbers, whatever. So Producers will add products to the queue and Consumers will consume products from the queue.
+The goal is to have the cadets consolidate the knowledge of both the Java Collections and multi-threading by implementing their own version of a BlockingQeue, and have them understand what a `thread safe` program is and what do we have to worry about in order to make it so.  
+I like the idea of having a pizzeria and making and consuming pizzas, but you guys can use whatever as the data, Strings, numbers, whatever.
 
-* The queue needs to have a maxLimit.
-* Producers have a limit of products they can produce.
-* Consumers have a limit of products they can consume.
-* Each producer sleeps a random time before adding to the queue.
-* Each consumer removes something from the queue and sleeps a random time.
+#### Flow  
+1. The general concepts for the exercise are:
+  * We will build our implementation of a producer/consumer using a blocking queue of a fixed size created by us
+  * Producers will attempt to add products to the queue (Integers in AC's example)
+  * Consumers will attempt to get products from the queue
+  * The idea is that if a producer attempts to place something in the queue and finds it full, he will wait until a consumer frees up space on the queue
+  * The opposite is expected of the consumer if he attempts to get anything from the queue and finds it empty
+2. The producers should have a limit to how many items they produce and the same goes for the consumers.
+3. If you introduce random `threadSleep()` times in both the producer and the consumer, the concurrent behaviour might become more obvious
+4. Show the cadets the skeleton for the exercise and match each class with the previous points, then have them go at it
 
-[docs](https://gitlab.com/ac-bootcamp-materials/bootcamp/blob/master/docs/exercises/module_2_concurrency.adoc#user-content-exercise-producerconsumer-using-a-blocking-queue)
+_**Do not forget to make it really obvious that cadets should not use Java's already existing BlockingQueue!!**_
+
+##### Possible issues  
+* cadets will not understand that the lock they are using on the producer and consumer is not the same as the queue
+* cadets might notifyAll() before adding or removing elements, making the program not actually thread safe (remember them of the "check-then-act" situation)
+ 
+
+&nbsp;
+
+## 2.29. Synchronised collections
+A set of Java collections in which the state is encapsulated and all the public methods are synchronised. This makes sure that all operations on these classes are atomic and thus thread-safe, but concurrency is sacrificed.
+Java's synchronised classes are:
+
+* [HashTable][java.util.Hashtable-docs]
+* [Vector][java.util.Vector-docs]
+* [synchronised wrapper classes][java.util.Collections-synchronizedCollection-docs]
+
+Despite being thread-safe, these classes are not the most interesting to use in a high-concurrency environment.
+The reason for that is due to the fact that they implement single collection-wide locks, and it is often necessary to lock a collection for a considerable period during iterations in order to prevent a `ConcurrentModificationException` from occurring.
+
+
+&nbsp;
+
+## 2.30. Concurrent collections
+Java's [java.util.concurrent][java.util.concurrent-docs] package provides you with several concurrent implementations of containers, some of them being:
+
+ * [ConcurrentHashMap][java.util.concurrent.ConcurrentHashMap-docs]
+ * [CopyOnWriteArrayList][java.util.concurrent.CopyOnWriteArrayList-docs]
+
+There are several others, finding out which is a matter of looking in the java.util.concurrent package for them.
+Those somewhat "improved" containers are actually designed with concurrent access by several threads in mind and can offer interesting scalability improvements. This is possible due to how locking is actually implemented within the containers. In the example of the [ConcurrentHashMap][java.util.concurrent.ConcurrentHashMap-docs], this is achieved by introducing the concept of segmentation, allowing only smaller parts of the collection to be locked at a single time, allowing free access to the rest, meaning that a thread does not block access to all other threads trying to interact with the map, just those trying to access the same specific segment that it has locked for itself.
+
+
+&nbsp;
+
+## 2.31. Damn this is hard.
+Why can't I just make everything volatile and synchronised?
+You actually can, but that will actually end up performing worse than having a single thread, because not only you will basically end up not allowing threads to do much work in between each other, having an execution that will almost feel sequential, you will now also have your program busy switching between those threads.  
+Also you can easily create a deadlock by forgetting to release a lock somewhere...
+
+&nbsp;
+
+## 2.32. Thread pools and executors
+Let's switch subjeects a tiny bit and go back to our web server, which is currently creating a new thread for each request that comes in.
+
+&nbsp;
+
+## 2.33. Creating a Thread per request
+So, right now our web-servers are actually taking advantage of concurrency in order to be able to handle requests simultaneously, not leaving our users "hanging". That's pretty good, it has allowed us to fire a thread handling each request that arrived while our main thread goes back to actually waiting for more requests to arrive.
+
+But is it safe?
+
+&nbsp;
+
+## 2.34. {Hands-On} - How my web-server blew up
+
+#### Objectives
+![dream-crushing][dreamcrush-link]
+
+The goal is to show the cadets how expensive threads are and that even if they are idling they are consuming resources from the machine.
+
+#### Flow
+1. Prepare to use the script by running `npm i` on the `bootcamp/exercises/module-2/concurrency/1000requests` folder (beware, you must be in the `10000requests` branch of the repo, that is the branch with the currently working script) --> move script to master branch??
+2. Ask a cadet to run his server and for his ip and port
+3. Run the script aiming at his server `node 10000requests <IP>:<PORT> <AMOUNT_OF_REQUESTS>`
+4. You should achieve an `OutOfMemoryError` on the cadet's machine. (In case you run it against our solution, you will have to turn off our `Logger` or look back up in the console for the Error, because we are gracefully closing and logging all executing threads, so you will still get several logs after the main thread has blown up.)
+  
+  * If you have it installed, you can open the [visualvm][visualvm-site] tool to show the cadets what is happening to their server when handling the requests. Take a glance at how it works by following the link, and you can install it as a brew cask by running `brew cask install visualvm` if you want. It's a cool detail to just allow you to show some performance statistics to the cadets, including amount of threads and HEAP usage and size in a graphical way.
+ 
+&nbsp;
+
+## 2.35. What just happened?
+As the last hands-on tried to exemplify, creating threads and maintaining them is actually an expensive process that can consume significant resources from your machine.  
+There's actually a limit that will be imposed by both the JVM and the OS on how many threads your program can create, but you should also keep in mind that if you achieve a number of threads that is disproportionally gigantic, you will in fact end up loosing performance as you will spend too much time just jumping from thread to thread.  
+Thankfully in the environment that we are currently in we are unable to actually crash our system in a way that imposes grave consequences other than simply closing our program, thanks to those limits from the OS/JVM. 
+
+But even if so, we don't really want our server to go down that easily, do we?
+
+&nbsp;
+
+## 2.36. So yea, that wasn't really that safe...
+The problem with our server implementation as it is is that we are not in any way limiting the amount of threads that our program tries to create. This means that if either a malicious user, or simply a huge bunch of ordinary ones can cause our program to crash, intentionally or not.
+
+&nbsp;
+
+## 2.37. _**The EXECUTOR**_ ... framework.
+Besides the [java.util.concurrent][java.util.concurrent-docs]'s containers that we have spoken about a bit before, this package provides you with some more very interesting and useful stuff.  
+Some of which are the [java.util.concurrent.Executor][java.util.concurrent.Executor-docs] and [java.util.concurrent.ThreadPoolExecutor][java.util.concurrent.ThreadPoolExecutor-docs].
+
+The image in the slides aims to illustrate the structure behind all the involved entities, let's try to understand at least some of all that's mentioned. The first three rectangles on the left are interfaces:
+
+* [Executor][java.util.concurrent.Executor-docs] interface that defines the basic API for an object that is able to execute submitted `Runnable` tasks. (you will talk more about this in the next slide)
+* [ExecutorService][java.util.concurrent.ExecutorService-docs] provides methods to manage termination and methods that are able to produce a [Future][java.util.concurrent.Future] for tracking progress of asynchronous tasks (Don't get _too_ scared about the `Future`. It's actually a concept similar to JavaScript's `Promise`)
+* [ScheduledExecutorService][java.util.concurrent.ScheduledExecutorService-docs] is similar to the previous but allows scheduling of when to execute given tasks, either at a delay or an interval
+
+The rest are Classes:
+
+* [Executors][java.util.concurrent.Executors-docs] is this framework's equivalent of the Collections to the Collection framework, providing a lot of factory and utility methods for the classes in this package
+* [AbstractExecutorService][java.util.concurrent.AbstractExecutorService-docs] is an abstract class that provides default implementation for [ExecutorService][java.util.concurrent.ExecutorService-docs] execution methods
+* [ForkJoinPool][java.util.concurrent.ForkJoinPool-docs] is an [ExecutorService][java.util.concurrent.ExecutorService-docs] for running [ForkJoinTask][java.util.concurrent.ForkJoinTask-docs] (damn this language has some obscure cool shit. Read into this at your own leisure, but the general idea is that these are thread-like but light-weight objects intended to perform very small async tasks and the ForkJoinPool is the Executor meant to run them)
+* [ThreadPoolExecutor][java.util.concurrent.ThreadPoolExecutor-docs] provides an [ExecutorService][java.util.concurrent.ExecutorService-docs] that executes each submitted task using one of possibly several pooled threads
+* [ScheduledThreadPoolExecutor][java.util.concurrent.ScheduledThreadPoolExecutor-docs] is a [ThreadPoolExecutor][java.util.concurrent.ThreadPoolExecutor-docs] that can additionally schedule commands to run after a given delay, or to execute periodically.
+
+&nbsp;
+
+## 2.38. Executor interface
+(although mentioned in the previous slide's notes I feel it makes more sense to bring the following up as you open this slide - Rolo)
+Thanks to this new very powerful framework, we can further abstract the way we look at our application's operations, and we can instead of abstracting towards the concept of a `Thread` (which was at the same time the unit of work and the mechanism that was used to actually perform it), abstract towards the concept of a "task" (which would represent only a unit of work).  
+Ideally those tasks should be independent activities, that don't depend on the state, result, or possible side-effects of other tasks, and the main mechanism that will be responsible for executing these tasks will be an `ExecutorService`.
+
+The Executor interface in specific allows you to decouple a task's submission from its execution as long as they implement `Runnable`.  
+(This slide's notes do not seem accurate as well, they are most likely meant for a concrete implementation of an executor instead, since the interface only really forces you to have a `void execute(Runnable)` method - Rolo)
+
+&nbsp;
+
+## 2.39. Why use these Executors?
+The way we have been working directly with threads forces the creation of a new one each time we have a new task that we wish to set off. By making use of Executor entities we can reduce the amount of new threads created, since they will try to reutilise previously created worker threads in order to increase performance.
+
+(The following would as well apply to a specific implementation such as the ThreadPoolExecutor, not exactly to the Executor interface...? - Rolo)  
+Those executors also give you access to some more actions such as tuning, management, monitoring, logging or reporting errors.
+
+&nbsp;
+
+## 2.40. ExecutorService
+This is a sub-interface of [Executor][java.util.concurrent.Executor-docs], and it provides some methods to allow you the managing of the [Executor][java.util.concurrent.Executor-docs]'s lifetime and the the submission of tasks.
+This entity can be shut down, in which case it will stop accepting the submission of any new tasks.
+You should not forget to shut down an ExecutorService when you are done using it, otherwise it will probably keep at least some of the threads it is managing running.  
+This means for instance that your `main()` may actually finish its execution and the application might keep running since an ExecutorService is still active.
+
+You can order this shut down to be done either graciously (`shutdown()`), in which current tasks are allowed to terminate but new ones are rejected, or abruptly (`shutdownNow()`), which will attempt to stop all actively executing tasks _and_ reject new ones.
+
+&nbsp;
+
+## 2.41. Creating new thread pools
+There are several ways to create thread pools that you can read about in the documentation, but unless you want to specifically define any of the several possible settings the best way to create those is vie using one of the several static factory methods from the [Executors][java.util.concurrent.Executors-docs] class. (If you want to read up on these settings you know just the place, right?... )
+
+&nbsp;
+
+## 2.42. newFixedThreadPool(int nThreads)
+Creates a thread pool that reuses a fixed number of threads operating off a shared unbounded queue. (in case you're not familiar with the concept, an unboundded queue is simply a queue that is not bound to a fixed size)  
+This type of pool will create threads as tasks are submitted, up to the maximum specified size, and will attempt to keep the pool size constant by creating new threads in case one dies due to for example an unexpected Exception)
+
+&nbsp;
+
+## 2.43. newCachedThreadPool()
+Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available.  
+A bit more flexible than a `FixedThreadPool`, as it will terminate idle threads when the current pool size is greater than currently demanded and will create new ones if the demand increases. This, however, does not impose a maximum size on the pool (for real? beware...)
+
+&nbsp;
+
+## 2.44. NewSingleThreadExecutor()
+Creates an Executor that uses a single worker thread operating off of an unbounded queue.
+The Executor will replace the thread in case it unexpectedly dies, and tasks submitted to this type of executor are guaranteed to be processed sequentially.  
+(Found no reference in documentation as to the possibility of choosing what queue is used within the Executor, which leads me to believe that what is meant by this slide's last sentence refers to having the tasks come from a queue, and that being the one who determines the order, by submitting them to the executor by its standards -- must confirm - Rolo)
+
+&nbsp;
+
+## 2.45. {Exercise} How my web-server _held the door_
+#### Objective
+
+* Have the cadets understand how actually managing the number of threads we allow our implementation to have is a great perk, and make them do so in their web-servers.
+
+#### Flow
+
+* Ask the cadets to make their servers bullet proof by making use of their newly acquired knowledge of thread pools
+* Proceed to test the strength of their servers once more by using the previous script again and see if they now hold up.
+
+&nbsp;
+
+## 2.46. {Exercise} Make that chat behave better than whatsapp!
+
 
 &nbsp;
 
@@ -824,14 +1008,12 @@ We will build a producer/consumer app using a blocking queue. I have a pizzeria 
 
 * [\[Video\] Inter Process Communication][inter-process-communication-video]
 
-  
 
-[single-core-cpu]: <resources/images/single-core-cpu.png>
-[pre-emptive-multitasking]: <resources/images/pre-emptive-multitasking.png>
-[multi-tasking-os]: <resources/images/multi-tasking-os.png>
-[l1-l2-l3-cache]: <resources/images/l1-l2-l3-cache.png>
+
+[//]: # (THIS IS A WAY OF COMMENTING IN MARKDOWN! here as an example)
+
+[//]: # (LINKS TO VARIOUS EXTERNAL RESOURCES)
 [multithreading]: https://www.tutorialspoint.com/operating_system/images/thread_processes.jpg
-[lock]: <resources/images/lock.png>
 
 [multithreading-video]: https://www.youtube.com/watch?v=t-zgY7zV9tk
 [process-vs-threads-video]: https://www.youtube.com/watch?v=exbKr6fnoUw
@@ -848,5 +1030,32 @@ We will build a producer/consumer app using a blocking queue. I have a pizzeria 
 [volatile-memory-consistency-post]: <https://dzone.com/articles/java-multi-threading-volatile-variables-happens-be-1>
 [l1-l2-l3-cache-post]: <https://specialties.bayt.com/en/specialties/q/305444/what-is-the-difference-between-l1-l2-and-l3-cache-memory/>
 
+[visualvm-site]:https://visualvm.github.io/documentation.html
 
 
+[//]: # (LINKS TO IMAGES AND SIMILAR RESOURCES)
+[single-core-cpu]: <resources/images/single-core-cpu.png>
+[pre-emptive-multitasking]: <resources/images/pre-emptive-multitasking.png>
+[multi-tasking-os]: <resources/images/multi-tasking-os.png>
+[l1-l2-l3-cache]: <resources/images/l1-l2-l3-cache.png>
+[dreamcrush-link]: <resources/images/crushdreams.png>
+
+
+[//]: # (LINKS TO JAVA DOCUMENTATION)
+[java.util.Hashtable-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/Hashtable
+[java.util.Vector-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/Vector.html
+[java.util.Collections-synchronizedCollection-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#synchronizedCollection(java.util.Collection)
+[java.util.concurrent-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/package-summary.html
+[java.util.concurrent.ConcurrentHashMap-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentHashMap.html
+[java.util.concurrent.CopyOnWriteArrayList-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CopyOnWriteArrayList.html
+[java.util.concurrent.Executor-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executor.html
+[java.util.concurrent.ThreadPoolExecutor-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ThreadPoolExecutor.html
+[java.util.concurrent.ExecutorService-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
+[java.util.concurrent.Future]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html
+[java.util.concurrent.ScheduledExecutorService-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ScheduledExecutorService.html
+[java.util.concurrent.Executors-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executors.html
+[java.util.concurrent.AbstractExecutorService-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/AbstractExecutorService.html
+[java.util.concurrent.ForkJoinPool-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ForkJoinPool.html
+[java.util.concurrent.ForkJoinTask-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ForkJoinTask.html
+[java.util.concurrent.ThreadPoolExecutor-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ThreadPoolExecutor.html
+[java.util.concurrent.ScheduledThreadPoolExecutor-docs]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ScheduledThreadPoolExecutor.html 
