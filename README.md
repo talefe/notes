@@ -6,9 +6,12 @@ To develop these docs, you should be familiar with Markdown formatting language.
 documentation written by its creator John Gruber [here][markdown-documentation], and if you need a
 refresher, [this tutorial][markdown-tutorial] should suffice.  
 To write these docs, you can use [MacDown][macdown-website] (`brew cask install macdown`), an
-editing markdown software that allows you to see how your file is rendered.  
-You should also have access to the Trello board where we organize who's in charge of each document.
-Visit [this][trello-invite] to add yourself to the board.
+editing markdown software that allows you to see how your file is rendered.
+
+Also, a suggestion would be to use [this][markdown-extension-link] if you use Google Chrome, in
+order to be able to render your `.md` files the way you want them. You should also have access to
+the Trello board where we organize who's in charge of each document. Visit [this][trello-invite] to
+add yourself to the board.
 
 &nbsp;
 
@@ -105,6 +108,8 @@ As follows:
     https://trello.com/invite/b/jbOEmzmj/32bcd7201390cf16aa72385685365f70/docs-development
 [trello-board]: https://trello.com/b/jbOEmzmj
 [macdown-website]: https://macdown.uranusjr.com
+[markdown-extension-link]:
+    https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk?hl=en
 [directory-structure]: resources/images/directory-structure.png
 [docs-repo]: https://github.com/talefe/notes
 [module-0]: module-0/index.md
