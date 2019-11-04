@@ -1,3 +1,52 @@
+# 1.1. Principles of OOP programming!
+
+## 1.2. The 4 pillars of OOP
+
+These are:
+
+-   Abstraction
+-   Inheritance
+-   Polymorphism
+-   Encapsulation
+
+&nbsp;
+
+## 1.3. Abstraction!
+
+![abstraction][abstraction-image]
+
+One of the most important pillars behind OOP.  
+Abstraction is defined by IEEE (Institute of Electrical and Electronics Engineers) as
+
+> A view of a problem that extracts the essential information relevant to a particular purpose and
+> ignores the remainder of the information
+
+The idea here is that through abstraction, we are unable to simplify a problem or a representation
+only to the extent of detail that is needed for the problem at hand.
+
+Taking in some inspiration from Sérgio, take a look at the following image
+
+![not-a-pipe][not-a-pipe-image]
+
+Now try and answer the question: What is it that you are looking at?  
+You might be tempted to go right ahead and answer that it is a pipe. But is it? Even the sentece itself says otherwise...
+If it isn't a pipe what is it that you are currently in the presence of?... 
+After some consideration you will probably then get to the conclusion that what you're seeing is a painting. Well, you are right.  But alas you are wrong as well.
+
+In fact you are looking at a photo of a paiting of a pipe. And yet, this was plenty enough for all of us involved to know that we are thinking of a pipe, right?  
+Even deeper: the simple mentioning of the word pipe is enough for us to all know what we are talking about.
+
+The entire concept of a language is based on abstraction. Damn that's some *deep shit*.
+
+
+Ok but but lets take a step back, understand how we got here, and what this whole idea of abstraction means to programming.  
+As previously stated, the idea is that we abstract only enough of a problem so that we can handle it.
+
+Say I have 
+
+
+&nbsp;
+
 ## 3.1 Architectural patterns
 
 While design patterns are concerned about solving problems at the level of the different
@@ -47,6 +96,8 @@ The controller:
 
 ## 3.5. The flow of events
 
+![mvc-flow][mvc-flow-image]
+
 In a MVP implementation, the flow of handling an event will be the following:
 
 1. A user interacts with a view
@@ -66,6 +117,9 @@ them behind a controller object.
 -   MVP evolved when the applications grew in size and testing became more and more relevant. An
     entity that is the presenter is given total access to a view that generally is very passive and
     will be created declaratively, responding to data binding and no more.
+
+![mvp-flow][mvp-flow-image]
+
 -   MVVM attempts to separate the development of UI's from the aplication behaviour and business
     logic by making sure that the view only has data bindings to the view-model, which allows for
     complete separation of work on view from other layers.
@@ -103,3 +157,8 @@ actions upon the necessary models and returns data for the controller to inject 
 A slide with a few examples of Service layer interfaces
 
 ## 3.10. {Exercise} Apply a service layer to the javabank app
+
+[mvc-flow-image]: resources/images/mvc-flow-drawing.jpeg
+[mvp-flow-image]: resources/images/mvp-flow-drawing.jpg
+[abstraction-image]: resources/images/abstraction.png
+[not-a-pipe-image]: resources/images/not-a-pipe.jpg
