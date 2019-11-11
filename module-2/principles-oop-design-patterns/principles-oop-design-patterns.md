@@ -479,4 +479,4 @@ A slide with a few examples of Service layer interfaces
 [object-interface-image]: resources/images/object-interface.jpg
 [mvc-flow-image]: resources/images/mvc-flow-drawing.jpeg
 [mvp-flow-image]: resources/images/mvp-flow-drawing.jpg
-[mvvm-flow-image]: resources/images/mvvm.jpg
+[mvvm-flow-image]: resources/images/mvvm-flow-drawing.jpg
