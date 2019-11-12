@@ -1,11 +1,19 @@
 # Class docs, finally!
 
+&nbsp;
 
 ## 1 - Requirements
 
-To develop these docs, you should be familiar with Markdown formatting language. You can read the documentation written by its creator John Gruber [here][markdown-documentation], and if you need a refresher, [this tutorial][markdown-tutorial] should suffice.  
-To write these docs, you can use [MacDown][macdown-website] (`brew cask install macdown`), an editing markdown software that allows you to see how your file is rendered.  
-You should also have access to the Trello board where we organize who's in charge of each document. Visit [this][trello-invite] to add yourself to the board.
+To develop these docs, you should be familiar with Markdown formatting language. You can read the
+documentation written by its creator John Gruber [here][markdown-documentation], and if you need a
+refresher, [this tutorial][markdown-tutorial] should suffice.  
+To write these docs, you can use [MacDown][macdown-website] (`brew cask install macdown`), an
+editing markdown software that allows you to see how your file is rendered.
+
+Also, a suggestion would be to use [this][markdown-extension-link] if you use Google Chrome, in
+order to be able to render your `.md` files the way you want them. You should also have access to
+the Trello board where we organize who's in charge of each document. Visit [this][trello-invite] to
+add yourself to the board.
 
 &nbsp;
 
@@ -26,7 +34,8 @@ As follows:
 
 ### 2.1 - Project structure
 
-This project's structure is just a bunch of directories mimicking the structure we have for our slides. Each **module** has an _index.md_ linking to all the docs for that particular module. 
+This project's structure is just a bunch of directories mimicking the structure we have on our
+slides. Each **module** has an _index.md_ linking to all the docs for that particular module.
 
 * [Module 0 - Introduction to Computing Systems and Programming][module-0]
 * [Module 1 - Programming in Java][module-1]
@@ -53,10 +62,15 @@ Each **directory for a specific subject** should have the same structure:
 
 * All links should be reference and not inline. If you need examples, use this README as a template. (this makes it easier to change them later).
 
-> if you're trying to link to files in the resources folder, just wrap the location in <> to convert it to a link	
-  
+> if you're trying to link to files in the resources folder, just wrap the path in <> to convert it to a link
+
 * Use headers appropriately, don't abuse them. Headers lives matter. No, but seriously, we usually use level 2 to identify slide number, and lower levels where appropriate. Using headers appropriately will make it easier to navigate through your doc file later.
 
+* Docs should be written in the 3rd person (we/us), as that's how we should talk when giving a lecture.
+
+* In order to enforce some styling, a `.prettierrc` file is included in this repository, please make sure to format all your files making proper use of it. (**this is still subject to change**)
+
+&nbsp;
 
 ## Purpose
 
@@ -74,23 +88,19 @@ Each **directory for a specific subject** should have the same structure:
 
 > It's always a good idea to reference things that cadets have learned previously.
 
-> They should be written in the 3rd person (we/us), as that's how we should talk when giving a lecture.
 
-
+&nbsp;
 
 [markdown-documentation]: <https://daringfireball.net/projects/markdown>
 [markdown-tutorial]: <https://www.markdowntutorial.com>
 [trello-invite]: <https://trello.com/invite/b/jbOEmzmj/32bcd7201390cf16aa72385685365f70/docs-development>
 [trello-board]: <https://trello.com/b/jbOEmzmj>
 [macdown-website]: <https://macdown.uranusjr.com>
+[markdown-extension-link]: <https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk?hl=en>
 [directory-structure]: <resources/images/directory-structure.png>
-
 [docs-repo]: <https://github.com/talefe/notes>
-
 [module-0]: <module-0/index.md>
 [module-1]: <module-1/index.md>
 [module-2]: <module-2/index.md>
 [module-3]: <module-3/index.md>
 [module-4]: <module-4/index.md>
-
-
