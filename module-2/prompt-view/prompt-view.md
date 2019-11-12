@@ -154,6 +154,15 @@ in order to give your user some more information about why his input wasn't vali
 -   UI - abstract tthe interface created with [Prompt-view][prompt-view-repo]
 -   UserStore - the actual place where we store our users and access their data
 
+Our solution implements two extra classes for utility, one is simply for storing messages so that we
+don't have "magical strings", the other one is an utitly class to generate hashes from our user
+passwords so that we don't actually save a password, instead just a hash. We also have an interface
+for the UserStore, which means that we abstracted the way we are actually storing our users. If we
+decide to create a real database, it's as simple as creating a class that interacts with it and
+implements the said interface, allowing us to simply swap out the concrete implementationw without
+having to change anything in any other entity. (Cadets will see the same concept in JavaBank later
+on)
+
 3. Remind the cadets that they have already used external libraries previously and if needed
    remember them how they include one in their project (Have them clone the repository from GitHub
    and package the project themselves, the repository includes a `build.xml` file)
