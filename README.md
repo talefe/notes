@@ -50,8 +50,21 @@ Each **directory for a specific subject** should have the same structure:
 * an **md file**, which is basically the doc file
 * a **resources** directory with two sub-directories (images and videos), where all the resources needed for that doc file should be
 
-![Directory structure][directory-structure]
-
+```
+├── module-2
+│   ├── code-conventions
+│   │   └── code-conventions.md
+│   ├── concurrent-programming
+│   │   ├── concurrent-programming.md
+│   │   └── resources
+│   │       └── images
+│   │           ├── crushdreams.png
+│   │           ├── l1-l2-l3-cache.png
+│   │           ├── lock.png
+│   │           ├── multi-tasking-os.png
+│   │           ├── pre-emptive-multitasking.png
+│   │           └── single-core-cpu.png
+```
 &nbsp;
 
 ### 2.2 - md file structure 
@@ -62,11 +75,11 @@ Each **directory for a specific subject** should have the same structure:
 
 * All links should be reference and not inline. If you need examples, use this README as a template. (this makes it easier to change them later).
 
-> if you're trying to link to files in the resources folder, just wrap the path in <> to convert it to a link
+	> if you're trying to link to files in the resources folder, just wrap the path in <> to convert it to a link
 
 * Use headers appropriately, don't abuse them. Headers lives matter. No, but seriously, we usually use level 2 to identify slide number, and lower levels where appropriate. Using headers appropriately will make it easier to navigate through your doc file later.
 
-* Docs should be written in the 3rd person (we/us), as that's how we should talk when giving a lecture.
+* Docs should be written using we/us instead of I/me/you, as that's how we should talk when giving a lecture. It's also a good idea to reference things that cadets have learned previously.
 
 * In order to enforce some styling, a `.prettierrc` file is included in this repository, please make sure to format all your files making proper use of it. (**this is still subject to change**)
 
@@ -86,8 +99,6 @@ Each **directory for a specific subject** should have the same structure:
 
 * Use and link to outside resources, be it videos, tools, pictures, diagrams, what have you!
 
-> It's always a good idea to reference things that cadets have learned previously.
-
 
 &nbsp;
 
@@ -97,7 +108,6 @@ Each **directory for a specific subject** should have the same structure:
 [trello-board]: <https://trello.com/b/jbOEmzmj>
 [macdown-website]: <https://macdown.uranusjr.com>
 [markdown-extension-link]: <https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk?hl=en>
-[directory-structure]: <resources/images/directory-structure.png>
 [docs-repo]: <https://github.com/talefe/notes>
 [module-0]: <module-0/index.md>
 [module-1]: <module-1/index.md>
