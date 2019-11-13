@@ -1,7 +1,7 @@
 Authors:
 
 [Christina Hinchin](mailto:christina.hinchin@academiadecodigo.org)  
-[Sara Talefe](mailto:sara.talefe@academiadecodigo.org)
+[Sara Talefe](mailto:sara.talefe@academiadecodigo.org)  
 [Diogo Rolo](mailto:diogo.rolo@academiadecodigo.org)
 
 &nbsp;
@@ -69,8 +69,6 @@ An example of a **signal** that you’ve used before is the ctrl-C to kill a pro
 It is not actually you shutting down the program - you are just sending a signal via the operating
 system that you wish to terminate the program. The OS passes on this signal to the process and it
 shuts itself down.
-
-# ------------ TODO ------------
 
 **Semaphores** are classified into two types:
 
@@ -606,13 +604,9 @@ immutable object?
 
 Well, both mutable and immutable objects have their own uses, pros and cons.
 
-Immutable objects do indeed make life simpler in many cases. They are especially applicable for
-value types that don’t have an identity and can easily be replaced. And they can make concurrent
-programming way safer and cleaner (as most concurrent bugs are caused by mutable state shared
-between threads) However, for large and/or complex objects, creating a new copy of the object for
-every single change can be very costly and tedious. And for objects with a distinct identity,
-changing an existing object is much more simple and intuitive than creating a new modified copy of
-it.
+Immutable objects do indeed make life simpler in many cases. They are especially applicable for value types that don’t have an identity and can easily be replaced. And they can make concurrent programming way safer and cleaner (as most concurrent bugs are caused by mutable state shared between threads). 
+
+However, for large and/or complex objects, creating a new copy of the object for every single change can be very costly and tedious. And for objects with a distinct identity, changing an existing object is much more simple and intuitive than creating a new modified copy of it.
 
 Think about a game character. In games, speed is top priority, so representing your game characters
 with mutable objects will most likely make your game run significantly faster than an alternative
